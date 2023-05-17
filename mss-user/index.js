@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const app = express();
 app.listen(3005);
 app.use(express.json());
@@ -6,27 +7,40 @@ app.use(express.json());
 // mock
 const users = [];
 
-app.post("/create-user", (req, res) => {
-  const { name, phone, email, password } = req.body;
-  const found = users.find((user) => user.email == email);
-  const newUser = {
-    name: name,
-    phone: phone,
-    email: email,
-    password: password,
-  };
-  if (!found) {
-    users.push(newUser.toString());
+app.post("/create-user", async (req, res) => {
+  try {
+    const { name, phone, email, password } = req.body;
+    const found = users.find((user) => user.email == email);
+    const hashPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      name: name,
+      phone: phone,
+      email: email,
+      password: hashPassword,
+    };
+    if (!found) {
+      users.push(newUser);
 
-    res.status(201);
-    res.send(`newUser created: ${newUser.toString()}`);
-  } else {
-    res.status(403);
-    res.send("User already exists");
+      // response em json
+      res.status(201).json(newUser);
+
+      //// response em string
+      //res.status(201).send(`User created: ${JSON.stringify(newUser)}`);
+    } else {
+      res.status(403);
+      res.send("User already exists");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ erro: "Internal Server Error" });
   }
 });
 
-app.post("/update-user", (req, res) => {
+app.get("/get-users", (req, res) => {
+  res.status(200).type("application/json").send(users);
+});
+
+app.put("/update-user", (req, res) => {
   const found = users.find((user) => user.email == req.body.email);
   const index = users.indexOf(found);
   if (found) {
@@ -38,25 +52,37 @@ app.post("/update-user", (req, res) => {
       users[index].phone = req.body.phone;
     }
 
-    if (req.body.password !== undefined) {
-      users[index].password = req.body.password;
-    }
+    //// ainda sem middleware de auth, por isso sem possibilidade de troca de senha
+    // if (req.body.password !== undefined) {
+    //   users[index].password = req.body.password;
+    // }
 
-    res.status(200);
-    res.send(`User updated: ${users[index].toString()}`);
+    // response em json
+    res.status(201).json(users[index]);
+
+    //// response em string
+    // res.status(200).send(`User updated: ${JSON.stringify(users[index])}`);
+  } else {
+    res.status(401).send(`Error to update this user: ${req.body.email}`);
   }
 });
 
-app.post("/login", (req, res) => {
-  const { login, password } = req.body;
-  const found = users.find(
-    (user) => user.email === email && user.password === password
-  );
-  if (found) {
-    res.status(200);
-    res.send("Login with succeed");
-  } else {
-    res.status(403);
-    res.send("Login or password invalid");
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const found = users.find((user) => user.email === email);
+    if (found) {
+      const passwordIsCorrect = await bcrypt.compare(password, found.password);
+      if (passwordIsCorrect) {
+        res.status(200).send("Login with succeed");
+      } else {
+        res.status(401).send("E-mail or password invalid");
+      }
+    } else {
+      res.status(401).send("E-mail or password invalid");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ erro: "Internal Server Error" });
   }
 });
