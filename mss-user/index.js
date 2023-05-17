@@ -1,7 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
-app.listen(3005);
+const port = process.env.PORT || 3005;
 app.use(express.json());
 
 // mock
@@ -86,3 +87,5 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
+
+app.listen(port, () => console.log(`Listening on port: ${port}`));
