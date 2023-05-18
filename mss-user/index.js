@@ -1,56 +1,87 @@
+// Imports
+// dotenv - ambiente de execução
 require("dotenv").config();
+// express - framework de servidor
 const express = require("express");
-const bcrypt = require("bcrypt");
 const app = express();
-const port = process.env.PORT || 3005;
 app.use(express.json());
+// bcrypt - encriptacao 
+const bcrypt = require("bcrypt");
+const port = process.env.PORT || 3005;
 
-// mock
+
+// Mock
 const users = [];
+// codigo sequencial de usuario
+let userCode = 0; 
 
-app.post("/create-user", async (req, res) => {
+
+// POST 
+// criacao de novo usuario
+app.post("/users", async (req, res) => {
   try {
-    const { name, phone, email, password } = req.body;
+    const { name, phone, email, password, address } = req.body;
+    // email considerado como imutavel
+    // usado para localizar usuarios
     const found = users.find((user) => user.email == email);
-    const hashPassword = await bcrypt.hash(password, 10);
+    // encriptacao de senha
+    const hashPassword = await bcrypt.hash(password, 10); 
+    // codigo sequencial de usuario
+    userCode++
+    // construtor de User
     const newUser = {
+      userCode: userCode,
       name: name,
       phone: phone,
       email: email,
       password: hashPassword,
+      address: address
     };
+
     if (!found) {
       users.push(newUser);
-
       // response em json
       res.status(201).json(newUser);
-
       //// response em string
       //res.status(201).send(`User created: ${JSON.stringify(newUser)}`);
     } else {
       res.status(403);
       res.send("User already exists");
     }
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
 
-app.get("/get-users", (req, res) => {
+
+// GET 
+// retorno de usuarios
+app.get("/users", (req, res) => {
   res.status(200).type("application/json").send(users);
 });
 
-app.put("/update-user", (req, res) => {
+
+// PUT 
+// atualizar dados de usuarios
+app.put("/users", (req, res) => {
+  // procura usuario com email correspondente
   const found = users.find((user) => user.email == req.body.email);
+  // obtem indice do usuario
   const index = users.indexOf(found);
   if (found) {
+    // atualiza apenas os campos nao nulos
     if (req.body.name !== undefined) {
       users[index].name = req.body.name;
     }
 
     if (req.body.phone !== undefined) {
       users[index].phone = req.body.phone;
+    }
+
+    if (req.body.address !== undefined) {
+      users[index].address = req.body.address;
     }
 
     //// ainda sem middleware de auth, por isso sem possibilidade de troca de senha
@@ -60,7 +91,6 @@ app.put("/update-user", (req, res) => {
 
     // response em json
     res.status(201).json(users[index]);
-
     //// response em string
     // res.status(200).send(`User updated: ${JSON.stringify(users[index])}`);
   } else {
@@ -68,18 +98,27 @@ app.put("/update-user", (req, res) => {
   }
 });
 
+
+// POST
+// prototipo de login funcional
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+    // procura email na lista de usuarios 
     const found = users.find((user) => user.email === email);
+    // verifica se email foi encontrado
     if (found) {
       const passwordIsCorrect = await bcrypt.compare(password, found.password);
+      // caso encontrado verifica se a senha informada esta correta
       if (passwordIsCorrect) {
-        res.status(200).send("Login with succeed");
+        // correta = sucesso
+        res.status(200).send("Login success");
       } else {
+        // incorreta = email ou senha invalidos
         res.status(401).send("E-mail or password invalid");
       }
     } else {
+      // email nao encontrado = email ou senha invalidos
       res.status(401).send("E-mail or password invalid");
     }
   } catch (error) {
@@ -87,5 +126,8 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
+
+
+
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));

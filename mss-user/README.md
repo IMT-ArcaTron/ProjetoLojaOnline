@@ -4,12 +4,11 @@
 <br/>
 
 ### Utilizado para realizar login
-> recurso ainda não implementado
 
 <br/>
 <br/>
 
-# 💻 Início Rápido
+# 🏁 Início Rápido
 ### Clonar este repositório:
 ``` bash
 git clone [this repository]
@@ -36,9 +35,49 @@ npm start
 <br/>
 
 ## JSON
+### Formatação de JSON para requests:
+``` JSON
+{
+  "name": "Joao Silva",
+  "phone": "(11) 99999-9999",
+  "email": "joao.silva@email.com",
+  "password": "12345",
+  "address": "Rua do Limoeiro, 150" 
+}
+```
 <br/>
 
-## POST
+
+## POST - Criação de usuário
+
+### Realizar uma operação POST com a estrutura especificada no tópico *JSON* acima em `localhost:3005/users`
+>O e-mail informado não pode já ter sido usado por outro usuário
+
 <br/>
 
-## GET
+## GET - Obter usuários cadastrados 
+### Realizar uma operação GET em `localhost:3005/users`
+<br/>
+
+## PUT - Alterar dados de usuario
+### Realizar uma operação PUT com a estrutura especificada no tópico *JSON* acima em `localhost:3005/users`
+>Para alterar os dados de um usuário é necessario informar um e-mail previamente cadastrado na request
+
+<br/>
+
+## DELETE - Deletar usuário
+a ser preenchido
+
+<br/>
+
+## POST - Login
+### Realizar uma operação POST com a estrutura especificada abaixo em `localhost:3005/login`
+```JSON
+{
+  "email": "joao.silva@email.com",
+  "password": "12345"
+}
+```
+>Para realizar um login é necessario informar um e-mail previamente cadastrado e a senha correta na request
+
+<br/>
