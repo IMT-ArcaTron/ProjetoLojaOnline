@@ -26,4 +26,3 @@
 <br/>
 
 ### Utilizado para realizar login
-> recurso ainda não implementado
