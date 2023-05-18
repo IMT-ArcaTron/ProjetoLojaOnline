@@ -50,28 +50,30 @@ npm start
 
 ## POST - Criação de usuário
 
-### Realizar uma operação POST com a estrutura especificada no tópico *JSON* acima em `localhost:3005/users`
+### Realizar uma operação POST com a estrutura especificada no tópico *JSON* acima na URL  `localhost:3005/users`
 >O e-mail informado não pode já ter sido usado por outro usuário
 
 <br/>
 
 ## GET - Obter usuários cadastrados 
-### Realizar uma operação GET em `localhost:3005/users`
+### Realizar uma operação GET na URL  `localhost:3005/users`
 <br/>
 
 ## PUT - Alterar dados de usuario
-### Realizar uma operação PUT com a estrutura especificada no tópico *JSON* acima em `localhost:3005/users`
+### Realizar uma operação PUT com a estrutura especificada no tópico *JSON* acima na URL  `localhost:3005/users`
 >Para alterar os dados de um usuário é necessario informar um e-mail previamente cadastrado na request
+>>E-mail e senha não podem ser alterados
 
 <br/>
 
 ## DELETE - Deletar usuário
-a ser preenchido
+### Realizar uma operação DELETE com a estrutura especificada no tópico *JSON* acima na URL `localhost:3005/users`
+>Para alterar os dados de um usuário é necessario informar um e-mail previamente cadastrado na request
 
 <br/>
 
 ## POST - Login
-### Realizar uma operação POST com a estrutura especificada abaixo em `localhost:3005/login`
+### Realizar uma operação POST com a estrutura especificada abaixo na URL  `localhost:3005/login`
 ```JSON
 {
   "email": "joao.silva@email.com",

@@ -13,7 +13,7 @@ const port = process.env.PORT || 3005;
 // Mock
 const users = [];
 // codigo sequencial de usuario
-let userCode = 0; 
+let userCode = 0;
 
 
 // POST 
@@ -25,7 +25,7 @@ app.post("/users", async (req, res) => {
     // usado para localizar usuarios
     const found = users.find((user) => user.email == email);
     // encriptacao de senha
-    const hashPassword = await bcrypt.hash(password, 10); 
+    const hashPassword = await bcrypt.hash(password, 10);
     // codigo sequencial de usuario
     userCode++
     // construtor de User
@@ -95,6 +95,30 @@ app.put("/users", (req, res) => {
     // res.status(200).send(`User updated: ${JSON.stringify(users[index])}`);
   } else {
     res.status(401).send(`Error to update this user: ${req.body.email}`);
+  }
+});
+
+
+// DELETE 
+// deletar usuario
+app.delete("/users", async (req, res) => {
+  try {
+    // procura usuario com email correspondente
+    const found = users.find((user) => user.email == req.body.email);
+    // obtem indice do usuario
+    const index = users.indexOf(found);
+    if (found) {
+      // deleta usuario
+      users.splice(index, 1);
+      // response em json
+      res.status(200).type("application/json").send(users);
+    } else {
+      res.status(404).send(`User ${req.body.email} not found`);
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ erro: "Internal Server Error" });
   }
 });
 
