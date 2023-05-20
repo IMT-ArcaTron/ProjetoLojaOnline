@@ -83,3 +83,31 @@ npm start
 >Para realizar um login é necessario informar um e-mail previamente cadastrado e a senha correta na request
 
 <br/>
+
+# Realizando testes dos requests.
+
+## POST para criação dos usuários
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/ba73e687-144b-4134-9142-35c8e8acc815)
+
+<br/>
+
+## GET para obter usuários já cadastrados.
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/1eae483c-f2d3-476c-8041-5d8114222ea2)
+
+
+<br/>
+
+## PUT para alterar dados de usuários.
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/965f39db-b3a5-49e6-9eba-94ee5f854b20)
+
+<br/>
+
+## DELETE para deletar usuários criados.
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/0222657e-5f10-41b3-98e7-b9f442a92fb0)
+
+<br/>
+
+## POST para realizar login.
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/14246537-ad37-4031-9751-82adc6d0eb98)
+
+<br/>
