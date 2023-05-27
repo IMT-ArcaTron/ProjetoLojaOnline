@@ -6,12 +6,17 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 // bcrypt - encriptacao 
-const bcrypt = require("bcrypt");
 const port = process.env.PORT || 3006;
 
+const ProductRepositoryMock = require('./repositories/productRepositoryMock');
+const OrderRepositoryMock = require('./repositories/orderRepositoryMock');
 
 // Mock
-const products = [];
+// const products = [];
+
+// Repositories, escolher mock ou banco de dados
+const productRepository = new ProductRepositoryMock();
+const orderRepository = new OrderRepositoryMock(productRepository);
 
 const orders = [];
 
@@ -32,7 +37,7 @@ app.post("/products", async (req, res) => {
     productCodeIncrement++
 
     // procura produto com codigo correspondente
-    const found = products.find((product) => product.code == productCodeIncrement);
+    const found = productRepository.getAll().find((product) => product.code == productCodeIncrement);
 
     // construtor de User
     const newProduct = {
@@ -45,7 +50,7 @@ app.post("/products", async (req, res) => {
     };
 
     if (!found) {
-      products.push(newProduct);
+      productRepository.create(newProduct);
       // response em json
       res.status(201).json(newProduct);
     } else {
@@ -63,15 +68,16 @@ app.post("/products", async (req, res) => {
 // GET 
 // retorno de produtos
 app.get("/products", (req, res) => {
-  res.status(200).type("application/json").send(products);
+  let products = productRepository.getAll();
+  res.status(200).json(products);
 });
 
 // GET 
 // retorno de um produto especifico por parametro
 app.get("/products/:code", (req, res) => {
   const code = req.params.code;
-  const foundProduct = products.find((product) => product.code.toString() === code.toString());
-
+  const foundProduct = productRepository.getByCode(code);
+  console.log(foundProduct);
   if (foundProduct) {
     res.status(200).json(foundProduct);
   } else {
@@ -89,28 +95,11 @@ app.put("/products", (req, res) => {
     return;
   }
 
-  const foundIndex = products.findIndex((product) => product.code === code);
+  const foundIndex = productRepository.getAll().findIndex((product) => product.code === code);
 
   if (foundIndex !== -1) {
-    const product = products[foundIndex];
-
-    if (name !== undefined) {
-      product.name = name;
-    }
-
-    if (price !== undefined) {
-      product.price = price;
-    }
-
-    if (type !== undefined) {
-      product.type = type;
-    }
-
-    if (description !== undefined) {
-      product.description = description;
-    }
-
-    res.status(200).json(product);
+    productRepository.update({ code, name, price, type, description });
+    res.status(200).json(productRepository.getByCode(code));
   } else {
     res.status(401).send(`Error updating product. Product not found for code: ${code}`);
   }
@@ -122,13 +111,13 @@ app.put("/products", (req, res) => {
 app.delete("/products", async (req, res) => {
   try {
     const { code } = req.body;
-    const foundIndex = products.findIndex((product) => product.code === code);
+    const foundIndex = productRepository.getAll().findIndex((product) => product.code === code);
 
     if (foundIndex !== -1) {
       // deleta usuario
-      products.splice(foundIndex, 1);
+      productRepository.delete(code);
       // response em json
-      res.status(200).type("application/json").send(products);
+      res.status(200).type("application/json").send(productRepository.getAll());
     } else {
       res.status(404).send(`Product ${code} not found`);
     }
@@ -148,11 +137,11 @@ app.delete("/products", async (req, res) => {
 app.post("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
-    const foundIndexInProducts = products.findIndex((product) => product.code === productCode);
+    const foundIndexInProducts = productRepository.getAll().findIndex((product) => product.code === productCode);
     const foundIndexInOrders = orders.findIndex((code) => code === productCode);
     if(foundIndexInProducts !== -1){
       if(foundIndexInOrders === -1){
-        orders.push(productCode);
+        orderRepository.add(productCode);
         // response em json
         res.status(201).json(productCode);
       }else{
@@ -173,12 +162,7 @@ app.post("/orders", async (req, res) => {
 // produtos no carrinho
 app.get("/orders", (req, res) => {
   // lista de produtos no carrinho
-  let myOrders =[]
-  products.forEach((product) => {
-    if (orders.includes(product.code)) {
-      myOrders.push(product);
-    }
-  });
+  let myOrders = orderRepository.getAll();
   res.status(200).json(myOrders);
 });
 
@@ -187,22 +171,16 @@ app.get("/orders", (req, res) => {
 app.delete("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
-    const foundIndex = orders.findIndex(
-      (code) => code === productCode);
+    const foundIndex = orderRepository.getAll().findIndex(
+      (order) => order.product.code === productCode);
     if (foundIndex !== -1) {
-      // deleta usuario
-      orders.splice(foundIndex, 1);
-
+      // deleta do carrinho
+      orderRepository.remove(productCode);
       // lista de produtos no carrinho
-      let myOrders =[]
-      products.forEach((product) => {
-        if (orders.includes(product.code)) {
-          myOrders.push(product);
-        }
-      });
+      let myOrders = orderRepository.getAll();
 
       // response em json
-      res.status(200).type("application/json").send(myOrders);
+      res.status(200).json(myOrders);
     } else {
       res.status(404).send(`Product ${productCode} not found`);
     }
