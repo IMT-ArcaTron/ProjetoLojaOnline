@@ -8,15 +8,21 @@ app.use(express.json());
 // bcrypt - encriptacao 
 const port = process.env.PORT || 3006;
 
+// Mock require
 const ProductRepositoryMock = require('./repositories/productRepositoryMock');
 const OrderRepositoryMock = require('./repositories/orderRepositoryMock');
 
-// Mock
-// const products = [];
+// DB (pg) require
+const ProductRepositoryPg = require('./repositories/productRepositoryPg');
+const OrderRepositoryPg = require('./repositories/orderRepositoryPg');
 
-// Repositories, escolher mock ou banco de dados
-const productRepository = new ProductRepositoryMock();
-const orderRepository = new OrderRepositoryMock(productRepository);
+// Switch entre Mock e DB, descomentar o que deseja usar
+// Mock repository
+// const productRepository = new ProductRepositoryMock();
+// const orderRepository = new OrderRepositoryMock(productRepository);
+// Pg repository
+const productRepository = new ProductRepositoryPg();
+const orderRepository = new OrderRepositoryPg(productRepository);
 
 const orders = [];
 
@@ -37,9 +43,10 @@ app.post("/products", async (req, res) => {
     productCodeIncrement++
 
     // procura produto com codigo correspondente
-    const found = productRepository.getAll().find((product) => product.code == productCodeIncrement);
+    // ESTA DANDO ERRO COM O FIND - CB
+    const found = await productRepository.getAll().find((product) => product.code == productCodeIncrement);
 
-    // construtor de User
+    // construtor de Product
     const newProduct = {
       code: productCodeIncrement,
       name: name,
@@ -50,7 +57,7 @@ app.post("/products", async (req, res) => {
     };
 
     if (!found) {
-      productRepository.create(newProduct);
+      await productRepository.create(newProduct);
       // response em json
       res.status(201).json(newProduct);
     } else {
@@ -67,16 +74,17 @@ app.post("/products", async (req, res) => {
 
 // GET 
 // retorno de produtos
-app.get("/products", (req, res) => {
-  let products = productRepository.getAll();
+app.get("/products", async (req, res) => {
+  let products = await productRepository.getAll();
+  console.log(products);
   res.status(200).json(products);
 });
 
 // GET 
 // retorno de um produto especifico por parametro
-app.get("/products/:code", (req, res) => {
+app.get("/products/:code", async (req, res) => {
   const code = req.params.code;
-  const foundProduct = productRepository.getByCode(code);
+  const foundProduct = await productRepository.getByCode(code);
   console.log(foundProduct);
   if (foundProduct) {
     res.status(200).json(foundProduct);
@@ -87,6 +95,7 @@ app.get("/products/:code", (req, res) => {
 
 // PUT 
 // atualizar dados de produtos
+// ESTA DANDO ERRO COM O FIND - CB
 app.put("/products", (req, res) => {
   const { code, name, price, type, description } = req.body;
 
@@ -160,9 +169,10 @@ app.post("/orders", async (req, res) => {
 
 // GET 
 // produtos no carrinho
-app.get("/orders", (req, res) => {
+app.get("/orders", async (req, res) => {
   // lista de produtos no carrinho
-  let myOrders = orderRepository.getAll();
+  let myOrders = await orderRepository.getAll();
+  console.log(myOrders);
   res.status(200).json(myOrders);
 });
 

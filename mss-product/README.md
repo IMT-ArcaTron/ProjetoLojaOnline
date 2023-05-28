@@ -1,4 +1,4 @@
-# `mss-user`
+# `mss-product`
 ### Microserviço de cadastro, armazenamento e gerenciamento de usuários
 
 <br/>
