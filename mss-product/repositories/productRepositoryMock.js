@@ -17,7 +17,7 @@ class ProductRepositoryMock extends IProductRepository{
         description,
         urlPhoto
       }) {
-        // construtor de User
+        // construtor de Product
         const newProduct = new Product({
             code, 
             name, 
