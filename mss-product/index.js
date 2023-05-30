@@ -18,16 +18,11 @@ const OrderRepositoryPg = require("./repositories/orderRepositoryPg");
 
 // Switch entre Mock e DB, descomentar o que deseja usar
 // Mock repository
-// const productRepository = new ProductRepositoryMock();
-// const orderRepository = new OrderRepositoryMock(productRepository);
+const productRepository = new ProductRepositoryMock();
+const orderRepository = new OrderRepositoryMock(productRepository);
 // Pg repository
-const productRepository = new ProductRepositoryPg();
-const orderRepository = new OrderRepositoryPg(productRepository);
-
-const orders = [];
-
-// codigo sequencial de produto
-let productCodeIncrement = 0;
+// const productRepository = new ProductRepositoryPg();
+// const orderRepository = new OrderRepositoryPg(productRepository);
 
 ////////////////////////////////////////////////////////////////
 //                          PRODUTOS                          //
@@ -43,20 +38,19 @@ app.post("/products", async (req, res) => {
     let productCode = Math.random().toString().split(".")[1].slice(0, 8);
 
     // procura produto com codigo correspondente
-    // ESTA DANDO ERRO COM O FIND - CB
-    // const found = await productRepository.getByCode(productCode);
-    const found = await productRepository.getByCode("17417302");
+    const found = await productRepository.getByCode(productCode);
 
     // construtor de Product
     const newProduct = {
       code: productCode,
+      name: name,
       price: price,
       type: type,
       description: description,
       urlPhoto: urlPhoto,
     };
 
-    if (!found) {
+    if (found.length === 0) {
       await productRepository.create(newProduct);
       // response em json
       res.status(201).json(newProduct);
@@ -102,11 +96,9 @@ app.put("/products", (req, res) => {
     return;
   }
 
-  const foundIndex = productRepository
-    .getAll()
-    .findIndex((product) => product.code === code);
+  const found = productRepository.getByCode(code);
 
-  if (foundIndex !== -1) {
+  if (found.length !== 0) {
     productRepository.update({ code, name, price, type, description });
     res.status(200).json(productRepository.getByCode(code));
   } else {
@@ -121,13 +113,11 @@ app.put("/products", (req, res) => {
 app.delete("/products", async (req, res) => {
   try {
     const { code } = req.body;
-    const foundIndex = productRepository
-      .getAll()
-      .findIndex((product) => product.code === code);
+    const found = productRepository.getByCode(code.toString());
 
-    if (foundIndex !== -1) {
+    if (found.length !== 0) {
       // deleta usuario
-      productRepository.delete(code);
+      productRepository.delete(code.toString());
       // response em json
       res.status(200).type("application/json").send(productRepository.getAll());
     } else {
@@ -148,19 +138,13 @@ app.delete("/products", async (req, res) => {
 app.post("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
-    const foundIndexInProducts = productRepository
-      .getAll()
-      .findIndex((product) => product.code === productCode);
-    const foundIndexInOrders = orders.findIndex((code) => code === productCode);
-    if (foundIndexInProducts !== -1) {
-      if (foundIndexInOrders === -1) {
-        orderRepository.add(productCode);
-        // response em json
-        res.status(201).json(productCode);
-      } else {
-        res.status(403);
-        res.send("Product already exists in orders");
-      }
+    const foundInProducts =
+      productRepository.getByCode(productCode).length !== 0;
+
+    if (foundInProducts) {
+      orderRepository.add(productCode);
+      // response em json
+      res.status(201).json(productCode);
     } else {
       res.status(404).send(`Product ${productCode} not found`);
     }
@@ -184,10 +168,8 @@ app.get("/orders", async (req, res) => {
 app.delete("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
-    const foundIndex = orderRepository
-      .getAll()
-      .findIndex((order) => order.product.code === productCode);
-    if (foundIndex !== -1) {
+    const found = orderRepository.getByCode(productCode).length !== 0;
+    if (found) {
       // deleta do carrinho
       orderRepository.remove(productCode);
       // lista de produtos no carrinho
