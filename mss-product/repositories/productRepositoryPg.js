@@ -90,7 +90,7 @@ class ProductRepositoryPg extends IProductRepository {
       })
       await client.connect()
       results = await client.query(`SELECT * FROM tb_product WHERE code = ${code}`) // comando SQL
-      // console.log(results)
+      console.log(results)
       await client.end
       return (results.rows)
     }

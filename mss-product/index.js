@@ -169,7 +169,7 @@ app.delete("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
     const found = orderRepository.getByCode(productCode).length !== 0;
-    if (found) {
+    if (found.length !== 0) {
       // deleta do carrinho
       orderRepository.remove(productCode);
       // lista de produtos no carrinho
