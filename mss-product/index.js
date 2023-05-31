@@ -89,7 +89,7 @@ app.get("/products/:code", async (req, res) => {
 // atualizar dados de produtos
 // ESTA DANDO ERRO COM O FIND - CB
 app.put("/products", (req, res) => {
-  const { code, name, price, type, description } = req.body;
+  const { code, name, price, type, description, urlPhoto } = req.body;
 
   if (!code) {
     res.status(400).send("Product code is required.");
@@ -99,7 +99,7 @@ app.put("/products", (req, res) => {
   const found = productRepository.getByCode(code);
 
   if (found.length !== 0) {
-    productRepository.update({ code, name, price, type, description });
+    productRepository.update({ code, name, price, type, description, urlPhoto });
     res.status(200).json(productRepository.getByCode(code));
   } else {
     res
