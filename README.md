@@ -26,3 +26,30 @@
 <br/>
 
 ### Utilizado para realizar login
+
+<br/>
+<br/>
+
+# 🚀 Segundo Release
+## `mss-user`
+### - Microserviço de cadastro, armazenamento e gerenciamento de usuários
+### - Utilizado para realizar login
+### - Integração com o banco de dados ainda não implementada
+> Para mais informações, ler README na pasta do microserviço
+
+<br/>
+
+## `mss-product`
+### - Microserviço de cadastro, armazenamento e gerenciamento de produtos
+### - Utilizado para adicionar e remover produtos do carrinho do cliente 
+> Para mais informações ler README na pasta do microserviço
+
+### - Este microserviço inicia a implementação do Banco de Dados Postgres
+> Para mais informações ler o README na pasta DB
+
+<br/>
+
+## `frontEnd`
+### - Esqueleto do front end
+### - Ainda não implementado com o restante do sistema
+> Para mais informações ler README na pasta frontEnd 
