@@ -29,7 +29,6 @@ class ProductRepositoryPg extends IProductRepository {
       urlPhoto
     });
 
-    // AINDA PRECISA VALIDAR ISSO - CB
     // Conexão com o banco de dados
     try {
       const client = new Client({
@@ -41,11 +40,11 @@ class ProductRepositoryPg extends IProductRepository {
       })
       await client.connect()
       results = await client.query(`INSERT INTO tb_product VALUES (${code}, 
-				  ${name},
-				  ${price},
-				  ${type},
-				  ${description},
-				  ${urlPhoto};`) // comando SQL
+                                  '${name}',
+                                  ${price},
+                                  '${type}',
+                                  '${description}',
+                                  '${urlPhoto}')`)
       console.log(results)
       await client.end
       return (results.rows)
@@ -90,7 +89,7 @@ class ProductRepositoryPg extends IProductRepository {
       })
       await client.connect()
       results = await client.query(`SELECT * FROM tb_product WHERE code = ${code}`) // comando SQL
-      // console.log(results)
+      console.log(results)
       await client.end
       return (results.rows)
     }
@@ -100,8 +99,7 @@ class ProductRepositoryPg extends IProductRepository {
   }
 
   // Método para atualizar um produto existente
-  // AINDA PRECISA VALIDAR ISSO - CB
-  async update({ code, name, price, type, description }) {
+  async update({ code, name, price, type, description, urlPhoto }) {
     // Conexão com o banco de dados
     try {
       const client = new Client({
@@ -112,13 +110,13 @@ class ProductRepositoryPg extends IProductRepository {
         port: 5432
       })
       await client.connect()
-      results = await client.query(`UPDATE tb_order 
-                                    SET name = ${name}, 
+      results = await client.query(`UPDATE tb_product 
+                                    SET name = '${name}', 
                                     price = ${price},
-                                    type = ${type}, 
-                                    description = ${description},
-                                    urlPhoto = ${urlPhoto}
-                                    WHERE code = ${code}`) // comando SQL
+                                    type = '${type}', 
+                                    description = '${description}',
+                                    urlphoto = '${urlPhoto}'
+                                    WHERE code = ${parseInt(code)}`) // comando SQL
       // console.log(results)
       await client.end
       return (results.rows)
@@ -129,8 +127,25 @@ class ProductRepositoryPg extends IProductRepository {
   }
 
   // Método para excluir um produto
-  delete(code) {
-    // deletar do banco de dados
+  async delete(code) {
+    // Conexão com o banco de dados
+    try {
+      const client = new Client({
+        host: "localhost",
+        user: "postgres", // user CB
+        password: "1234", // password CB
+        database: "projetoLojaOnline",
+        port: 5432
+      })
+      await client.connect()
+      results = await client.query(`DELETE FROM tb_product WHERE code = ${parseInt(code)} ;`) // comando SQL
+      // console.log(results)
+      await client.end
+      return (results.rows)
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 }
 

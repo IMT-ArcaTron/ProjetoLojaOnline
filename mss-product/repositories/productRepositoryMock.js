@@ -38,7 +38,7 @@ class ProductRepositoryMock extends IProductRepository {
 
   // Método para atualizar um produto existente
   update({ code, name, price, type, description, urlPhoto }) {
-    const index = this.products.findIndex((p) => p.code === code);
+    const index = this.products.findIndex((p) => p.code.toString() === code.toString());
 
     if (name !== undefined) {
       this.products[index].name = name;

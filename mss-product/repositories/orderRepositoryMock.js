@@ -7,9 +7,17 @@ class OrderRepositoryMock extends IOrderRepository {
     this.orders = [];
   }
 
+   // Método para obter um produto por código
+   getByCode(code) {
+    let found = this.orders.find(
+      (order) => order.product[0].code.toString() === code.toString()
+    );
+    return found ? [found] : [];
+  }
+
   add(productCode) {
     const foundIndex = this.orders.findIndex(
-      (order) => order.product[0].code === productCode
+      (order) => order.product[0].code.toString() === productCode.toString()
     );
     if (foundIndex === -1) {
       let product = this.productRepository.getByCode(productCode);
@@ -21,7 +29,7 @@ class OrderRepositoryMock extends IOrderRepository {
 
   remove(productCode) {
     const foundIndex = this.orders.findIndex(
-      (order) => order.product[0].code === productCode
+      (order) => order.product[0].code.toString() === productCode.toString()
     );
 
     if (foundIndex !== -1) {
