@@ -83,8 +83,9 @@ npm start
 >Para realizar um login é necessario informar um e-mail previamente cadastrado e a senha correta na request
 
 <br/>
+<br/>
 
-# Realizando testes dos requests.
+# 🚧 Realizando testes dos requests
 
 ## POST para criação dos usuários
 ![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/ba73e687-144b-4134-9142-35c8e8acc815)
