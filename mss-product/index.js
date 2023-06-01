@@ -87,7 +87,6 @@ app.get("/products/:code", async (req, res) => {
 
 // PUT
 // atualizar dados de produtos
-// ESTA DANDO ERRO COM O FIND - CB
 app.put("/products", (req, res) => {
   const { code, name, price, type, description, urlPhoto } = req.body;
 
