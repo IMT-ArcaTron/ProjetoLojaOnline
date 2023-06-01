@@ -110,21 +110,22 @@ const orderRepository = new OrderRepositoryPg(productRepository);
 
 # 🚧 Realizando testes dos requests.
 
-## POST
+## POST - Criando produto 1
+
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/3f12292a-0315-4d6b-a880-eeb0dc345f82)
 
 <br/>
 
-## GET 
+## GET - Listando todos os produtos
+
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/49f256e5-db2d-4126-a4fe-f16f0fd8b9db)
 
 <br/>
 
-<br/>
+## DELETE - Excluindo produto 1
 
-## DELETE 
-<br/>
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/754d438c-53dd-4833-9815-75651d3e26a8)
 
-
-<br/>
 <br/>
 
 # 🛒 Request para o carrinho
@@ -160,15 +161,21 @@ const orderRepository = new OrderRepositoryPg(productRepository);
 
 # 🚧 Realizando testes dos requests
 
-## POST
+## POST - Adicionado ao carrinho o produto 2
+
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/089d22ed-7c95-4f0c-8200-470cde02ea08)
 
 <br/>
 
-## GET 
+## GET - Listando os produtos do carrinho
+
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/a0e6f731-598b-42ee-90af-f22fa9f46fb2)
 
 <br/>
 
+## DELETE - Excluindo produto 2 do carrinho
 
-## DELETE 
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/04463a74-3133-4dd3-9891-27c1706bb185)
+
 <br/>
 
