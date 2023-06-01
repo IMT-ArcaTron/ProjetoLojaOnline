@@ -18,11 +18,11 @@ const OrderRepositoryPg = require("./repositories/orderRepositoryPg");
 
 // Switch entre Mock e DB, descomentar o que deseja usar
 // Mock repository
-const productRepository = new ProductRepositoryMock();
-const orderRepository = new OrderRepositoryMock(productRepository);
+// const productRepository = new ProductRepositoryMock();
+// const orderRepository = new OrderRepositoryMock(productRepository);
 // Pg repository
-// const productRepository = new ProductRepositoryPg();
-// const orderRepository = new OrderRepositoryPg(productRepository);
+const productRepository = new ProductRepositoryPg();
+const orderRepository = new OrderRepositoryPg(productRepository);
 
 ////////////////////////////////////////////////////////////////
 //                          PRODUTOS                          //

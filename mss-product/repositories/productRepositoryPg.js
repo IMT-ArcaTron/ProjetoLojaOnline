@@ -40,11 +40,11 @@ class ProductRepositoryPg extends IProductRepository {
       })
       await client.connect()
       results = await client.query(`INSERT INTO tb_product VALUES (${code}, 
-        '${name}',
-        ${price},
-        '${type}',
-        '${description}',
-        '${urlPhoto}')`)
+                                  '${name}',
+                                  ${price},
+                                  '${type}',
+                                  '${description}',
+                                  '${urlPhoto}')`)
       console.log(results)
       await client.end
       return (results.rows)
@@ -127,8 +127,25 @@ class ProductRepositoryPg extends IProductRepository {
   }
 
   // Método para excluir um produto
-  delete(code) {
-    // deletar do banco de dados
+  async delete(code) {
+    // Conexão com o banco de dados
+    try {
+      const client = new Client({
+        host: "localhost",
+        user: "postgres", // user CB
+        password: "1234", // password CB
+        database: "projetoLojaOnline",
+        port: 5432
+      })
+      await client.connect()
+      results = await client.query(`DELETE FROM tb_product WHERE code = ${parseInt(code)} ;`) // comando SQL
+      // console.log(results)
+      await client.end
+      return (results.rows)
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 }
 
