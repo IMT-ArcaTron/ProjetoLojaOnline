@@ -16,7 +16,7 @@ export default function Register() {
           <div className="form-group mt-3">
             <label>Nome </label>
             <input
-              type="email"
+              type="name"
               className="form-control mt-1"
               placeholder="Ahmad Kheder Mahfoud"
             />
