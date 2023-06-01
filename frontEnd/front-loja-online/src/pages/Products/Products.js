@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Navbar from "../../components/NavBar";
 export default function Products() {
   return (
     <div>
-      <h1>PAGINA DE PRODUTOS</h1>
-      <Link to={"/login"}>
-        <button>Sair</button>
-      </Link>
+      <Navbar/>
+    <div/>
+      <div class= "Container-title">
+      <h1 className = 'title-default'>Produtos</h1>
+      </div>
+     
     </div>
   );
 }
