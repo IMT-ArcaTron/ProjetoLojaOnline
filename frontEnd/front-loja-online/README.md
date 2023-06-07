@@ -1,34 +1,44 @@
 # `Front-End`
+
 ## Aplicação do Front End
+
 <br/>
 
 # 🏁 Início Rápido
+
 ### Clonar este repositório:
-``` bash
+
+```bash
 git clone [this repository]
 ```
+
 ### Acessar diretório:
-``` bash
+
+```bash
 cd frontEnd/front-loja-online
 ```
+
 ### Instalar react-scripts:
-``` bash
+
+```bash
  npm install react-scripts --save
 ```
 
 ### Iniciar modo de desenvolvimento:
-``` bash
+
+```bash
 npm start
 ```
 
 <br/>
 
 # 💻 Como Usar
+
 ### O ambiente de desenvolvimento será aberto em `http://localhost:3000/`
 
 <br/>
 
-#### Na tela de login o usuário pode escolher entre fazer o login com email e senha, ou caso não possua conta que realize um cadastro. 
+#### Na tela de login o usuário pode escolher entre fazer o login com email e senha, ou caso não possua conta que realize um cadastro.
 
 ![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/b0f6f860-6a5e-4a8b-86d8-3be0605ed9f7)
 
@@ -40,7 +50,6 @@ npm start
 
 <br/>
 
-#### Após realizar o cadastro o usuário será redirecionado para uma página de produtos ( Em desenvolvimento )
+#### Após realizar o login o usuário será redirecionado para uma página de produtos
 
-![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/9330b147-24f4-4f45-a221-0a360c14a293)
 
