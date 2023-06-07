@@ -52,4 +52,7 @@ npm start
 
 #### Após realizar o login o usuário será redirecionado para uma página de produtos
 
+![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/ea89dccb-dc8e-46f7-a185-f7332ed6cbbd)
+
+
 
