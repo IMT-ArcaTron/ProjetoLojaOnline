@@ -5,8 +5,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 app.use(express.json());
+const axios = require ("axios")
 // bcrypt - encriptacao
 const port = process.env.PORT || 3006;
+eventsPort = process.env.EVENTS_PORT || 3100;
 
 // Mock require
 const ProductRepositoryMock = require("./repositories/productRepositoryMock");
@@ -18,11 +20,11 @@ const OrderRepositoryPg = require("./repositories/orderRepositoryPg");
 
 // Switch entre Mock e DB, descomentar o que deseja usar
 // Mock repository
-// const productRepository = new ProductRepositoryMock();
-// const orderRepository = new OrderRepositoryMock(productRepository);
+const productRepository = new ProductRepositoryMock();
+const orderRepository = new OrderRepositoryMock(productRepository);
 // Pg repository
-const productRepository = new ProductRepositoryPg();
-const orderRepository = new OrderRepositoryPg(productRepository);
+// const productRepository = new ProductRepositoryPg();
+// const orderRepository = new OrderRepositoryPg(productRepository);
 
 ////////////////////////////////////////////////////////////////
 //                          PRODUTOS                          //
@@ -144,6 +146,13 @@ app.post("/orders", async (req, res) => {
       orderRepository.add(productCode);
       // response em json
       res.status(201).json(productCode);
+
+      await axios.post(`http://localhost:${eventsPort}/events`, {
+        type: 'addingToOrders',
+        data: {
+            product: productRepository.getByCode(productCode)
+        }
+    })
     } else {
       res.status(404).send(`Product ${productCode} not found`);
     }
@@ -168,6 +177,14 @@ app.delete("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
     const found = orderRepository.getByCode(productCode).length !== 0;
+
+    await axios.post(`http://localhost:${eventsPort}/events`, {
+        type: 'removingOfOrders',
+        data: {
+            product: found[0]
+        }
+    })
+
     if (found.length !== 0) {
       // deleta do carrinho
       orderRepository.remove(productCode);
@@ -184,5 +201,11 @@ app.delete("/orders", async (req, res) => {
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
+
+app.post('/events', (req,res) => {
+  const event = req.body
+  console.log(req.body)
+  res.status(200).send({msg: 'ok'}) 
+})
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
