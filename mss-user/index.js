@@ -1,6 +1,7 @@
 // Imports
 // dotenv - ambiente de execução
 require("dotenv").config();
+const axios = require ("axios")
 // express - framework de servidor
 const express = require("express");
 const app = express();
@@ -145,5 +146,11 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
+
+app.post('/events', (req,res) => {
+  const event = req.body
+  console.log(req.body)
+  res.status(200).send({msg: 'ok'}) 
+})
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
