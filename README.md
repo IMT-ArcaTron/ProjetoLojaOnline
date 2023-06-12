@@ -53,3 +53,15 @@
 ### - Esqueleto do front end
 ### - Ainda não implementado com o restante do sistema
 > Para mais informações ler README na pasta frontEnd 
+
+# 🚀 Terceiro Release
+## `barramento de eventos`
+### - Barramento de eventos realiza a comunicação entre os microserviços 
+### - Recebe informações sobre os pedidos adicionados ao carrinho, associando o produto no carrinho com o usuário
+> Para mais informações ler o README na pasta `barramento-eventos`
+
+<br/>
+
+## `Integração frontEnd - backEnd`
+### - Realizada a integração entre o Front-End e o Back-end
+### - Agora é possível realizar os testes das requisições dos microserviços utilizando o console do navegados
