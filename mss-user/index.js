@@ -1,22 +1,24 @@
 // Imports
 // dotenv - ambiente de execução
 require("dotenv").config();
+const axios = require ("axios")
 // express - framework de servidor
 const express = require("express");
 const app = express();
 app.use(express.json());
-// bcrypt - encriptacao 
+// bcrypt - encriptacao
 const bcrypt = require("bcrypt");
 const port = process.env.PORT || 3005;
 
+const cors = require("cors");
+app.use(cors());
 
 // Mock
 const users = [];
 // codigo sequencial de usuario
 let userCode = 0;
 
-
-// POST 
+// POST
 // criacao de novo usuario
 app.post("/users", async (req, res) => {
   try {
@@ -27,7 +29,7 @@ app.post("/users", async (req, res) => {
     // encriptacao de senha
     const hashPassword = await bcrypt.hash(password, 10);
     // codigo sequencial de usuario
-    userCode++
+    userCode++;
     // construtor de User
     const newUser = {
       userCode: userCode,
@@ -35,7 +37,7 @@ app.post("/users", async (req, res) => {
       phone: phone,
       email: email,
       password: hashPassword,
-      address: address
+      address: address,
     };
 
     if (!found) {
@@ -48,22 +50,19 @@ app.post("/users", async (req, res) => {
       res.status(403);
       res.send("User already exists");
     }
-
   } catch (error) {
     console.log(error);
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
 
-
-// GET 
+// GET
 // retorno de usuarios
 app.get("/users", (req, res) => {
   res.status(200).type("application/json").send(users);
 });
 
-
-// PUT 
+// PUT
 // atualizar dados de usuarios
 app.put("/users", (req, res) => {
   // procura usuario com email correspondente
@@ -98,8 +97,7 @@ app.put("/users", (req, res) => {
   }
 });
 
-
-// DELETE 
+// DELETE
 // deletar usuario
 app.delete("/users", async (req, res) => {
   try {
@@ -115,20 +113,18 @@ app.delete("/users", async (req, res) => {
     } else {
       res.status(404).send(`User ${req.body.email} not found`);
     }
-
   } catch (error) {
     console.log(error);
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
 
-
 // POST
 // prototipo de login funcional
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    // procura email na lista de usuarios 
+    // procura email na lista de usuarios
     const found = users.find((user) => user.email === email);
     // verifica se email foi encontrado
     if (found) {
@@ -151,7 +147,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
-
+app.post('/events', (req,res) => {
+  const event = req.body
+  console.log(req.body)
+  res.status(200).send({msg: 'ok'}) 
+})
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
