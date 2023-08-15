@@ -5,11 +5,14 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import RouterComponent from "./routes/RouterComponent";
+import { ProductProvider } from "./controllers/productContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterComponent />
+    <ProductProvider>
+      <RouterComponent />
+    </ProductProvider>
   </React.StrictMode>
 );
 

@@ -1,12 +1,13 @@
-import "bootstrap/dist/css/bootstrap.min.css"
-import "./App.css"
-import Auth from "./components/Auth"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import Auth from "./components/Auth";
+import { ProductProvider } from "./controllers/productContext";
 
 function App() {
   return (
     <div>
-      <Auth/>
+      <Auth />
     </div>
-  )
+  );
 }
-export default App
+export default App;
