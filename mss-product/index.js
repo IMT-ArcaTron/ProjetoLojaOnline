@@ -5,7 +5,9 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 app.use(express.json());
-const axios = require ("axios")
+const cors = require("cors");
+app.use(cors());
+const axios = require("axios");
 // bcrypt - encriptacao
 const port = process.env.PORT || 3006;
 eventsPort = process.env.EVENTS_PORT || 3100;
@@ -70,8 +72,9 @@ app.post("/products", async (req, res) => {
 // retorno de produtos
 app.get("/products", async (req, res) => {
   let products = await productRepository.getAll();
-  console.log(products);
-  res.status(200).json(products);
+  let products_json = products.map((product) => product.toJSON());
+  console.log(products_json);
+  res.status(200).json(products_json);
 });
 
 // GET
@@ -100,7 +103,14 @@ app.put("/products", (req, res) => {
   const found = productRepository.getByCode(code);
 
   if (found.length !== 0) {
-    productRepository.update({ code, name, price, type, description, urlPhoto });
+    productRepository.update({
+      code,
+      name,
+      price,
+      type,
+      description,
+      urlPhoto,
+    });
     res.status(200).json(productRepository.getByCode(code));
   } else {
     res
@@ -148,11 +158,11 @@ app.post("/orders", async (req, res) => {
       res.status(201).json(productCode);
 
       await axios.post(`http://localhost:${eventsPort}/events`, {
-        type: 'addingToOrders',
+        type: "addingToOrders",
         data: {
-            product: productRepository.getByCode(productCode)
-        }
-    })
+          product: productRepository.getByCode(productCode),
+        },
+      });
     } else {
       res.status(404).send(`Product ${productCode} not found`);
     }
@@ -176,14 +186,15 @@ app.get("/orders", async (req, res) => {
 app.delete("/orders", async (req, res) => {
   try {
     const { productCode } = req.body;
+    console.log("productCode no index:", productCode);
     const found = orderRepository.getByCode(productCode).length !== 0;
 
     await axios.post(`http://localhost:${eventsPort}/events`, {
-        type: 'removingOfOrders',
-        data: {
-            product: found[0]
-        }
-    })
+      type: "removingOfOrders",
+      data: {
+        product: found[0],
+      },
+    });
 
     if (found.length !== 0) {
       // deleta do carrinho
@@ -202,10 +213,10 @@ app.delete("/orders", async (req, res) => {
   }
 });
 
-app.post('/events', (req,res) => {
-  const event = req.body
-  console.log(req.body)
-  res.status(200).send({msg: 'ok'}) 
-})
+app.post("/events", (req, res) => {
+  const event = req.body;
+  console.log(req.body);
+  res.status(200).send({ msg: "ok" });
+});
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
