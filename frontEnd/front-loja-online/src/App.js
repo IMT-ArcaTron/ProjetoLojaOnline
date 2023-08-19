@@ -1,12 +1,12 @@
-import "bootstrap/dist/css/bootstrap.min.css"
-import "./App.css"
-import Auth from "./components/Auth"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import Auth from "./components/Auth";
 
 function App() {
   return (
     <div>
-      <Auth/>
+      <Auth />
     </div>
-  )
+  );
 }
-export default App
+export default App;

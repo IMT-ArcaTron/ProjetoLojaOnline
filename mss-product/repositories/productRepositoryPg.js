@@ -1,9 +1,9 @@
-const IProductRepository = require('../interfaces/productRepositoryInterface');
-const Product = require('../entities/product');
+const IProductRepository = require("../interfaces/productRepositoryInterface");
+const Product = require("../entities/product");
 
 // Import para DB
-const { Client } = require('pg');
-results = null
+const { Client } = require("pg");
+results = null;
 
 class ProductRepositoryPg extends IProductRepository {
   constructor() {
@@ -11,14 +11,7 @@ class ProductRepositoryPg extends IProductRepository {
   }
 
   // Método para criar um novo produto
-  async create({
-    code,
-    name,
-    price,
-    type,
-    description,
-    urlPhoto
-  }) {
+  async create({ code, name, price, type, description, urlPhoto }) {
     // construtor de User
     const newProduct = new Product({
       code,
@@ -26,7 +19,7 @@ class ProductRepositoryPg extends IProductRepository {
       price,
       type,
       description,
-      urlPhoto
+      urlPhoto,
     });
 
     // Conexão com o banco de dados
@@ -36,21 +29,20 @@ class ProductRepositoryPg extends IProductRepository {
         user: "postgres", // user CB
         password: "1234", // password CB
         database: "projetoLojaOnline",
-        port: 5432
-      })
-      await client.connect()
+        port: 5432,
+      });
+      await client.connect();
       results = await client.query(`INSERT INTO tb_product VALUES (${code}, 
                                   '${name}',
                                   ${price},
                                   '${type}',
                                   '${description}',
-                                  '${urlPhoto}')`)
-      console.log(results)
-      await client.end
-      return (results.rows)
-    }
-    catch (error) {
-      console.log(error)
+                                  '${urlPhoto}')`);
+      console.log(results);
+      await client.end;
+      return results.rows;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -63,16 +55,15 @@ class ProductRepositoryPg extends IProductRepository {
         user: "postgres", // user CB
         password: "1234", // password CB
         database: "projetoLojaOnline",
-        port: 5432
-      })
-      await client.connect()
-      results = await client.query('SELECT * FROM tb_product') // comando SQL
-      // console.log(results)
-      await client.end
-      return (results.rows)
-    }
-    catch (error) {
-      console.log(error)
+        port: 5432,
+      });
+      await client.connect();
+      results = await client.query("SELECT * FROM tb_product"); // comando SQL
+      console.log(results);
+      await client.end;
+      return results.rows;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -85,16 +76,17 @@ class ProductRepositoryPg extends IProductRepository {
         user: "postgres", // user CB
         password: "1234", // password CB
         database: "projetoLojaOnline",
-        port: 5432
-      })
-      await client.connect()
-      results = await client.query(`SELECT * FROM tb_product WHERE code = ${code}`) // comando SQL
-      console.log(results)
-      await client.end
-      return (results.rows)
-    }
-    catch (error) {
-      console.log(error)
+        port: 5432,
+      });
+      await client.connect();
+      results = await client.query(
+        `SELECT * FROM tb_product WHERE code = ${code}`
+      ); // comando SQL
+      console.log(results);
+      await client.end;
+      return results.rows;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -107,22 +99,21 @@ class ProductRepositoryPg extends IProductRepository {
         user: "postgres", // user CB
         password: "1234", // password CB
         database: "projetoLojaOnline",
-        port: 5432
-      })
-      await client.connect()
+        port: 5432,
+      });
+      await client.connect();
       results = await client.query(`UPDATE tb_product 
                                     SET name = '${name}', 
                                     price = ${price},
                                     type = '${type}', 
                                     description = '${description}',
                                     urlphoto = '${urlPhoto}'
-                                    WHERE code = ${parseInt(code)}`) // comando SQL
+                                    WHERE code = ${parseInt(code)}`); // comando SQL
       // console.log(results)
-      await client.end
-      return (results.rows)
-    }
-    catch (error) {
-      console.log(error)
+      await client.end;
+      return results.rows;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -135,16 +126,17 @@ class ProductRepositoryPg extends IProductRepository {
         user: "postgres", // user CB
         password: "1234", // password CB
         database: "projetoLojaOnline",
-        port: 5432
-      })
-      await client.connect()
-      results = await client.query(`DELETE FROM tb_product WHERE code = ${parseInt(code)} ;`) // comando SQL
+        port: 5432,
+      });
+      await client.connect();
+      results = await client.query(
+        `DELETE FROM tb_product WHERE code = ${parseInt(code)} ;`
+      ); // comando SQL
       // console.log(results)
-      await client.end
-      return (results.rows)
-    }
-    catch (error) {
-      console.log(error)
+      await client.end;
+      return results.rows;
+    } catch (error) {
+      console.log(error);
     }
   }
 }
