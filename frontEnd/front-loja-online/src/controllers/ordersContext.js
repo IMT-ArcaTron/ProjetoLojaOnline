@@ -8,6 +8,7 @@ function OrdersProvider({ children }) {
 
   const [orders, setOrders] = useState([]);
   const [total, setTotal] = useState(0);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
   useEffect(() => {
     getAll();
@@ -33,6 +34,12 @@ function OrdersProvider({ children }) {
     axios
       .post("http://localhost:3006/orders", { productCode })
       .then(() => getAll())
+      .then(() => {
+        setShowSuccessToast(true);
+        setTimeout(() => {
+          setShowSuccessToast(false);
+        }, 2000);
+      })
       .catch((err) => {
         alert(`Erro ao adicionar no carrinho: ${err}`);
       });
@@ -56,6 +63,7 @@ function OrdersProvider({ children }) {
         total,
         addOrder,
         removeOrder,
+        showSuccessToast,
       }}
     >
       {children}
