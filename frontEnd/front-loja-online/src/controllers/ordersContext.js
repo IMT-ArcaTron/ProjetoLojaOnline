@@ -8,6 +8,8 @@ function OrdersProvider({ children }) {
 
   const [orders, setOrders] = useState([]);
   const [total, setTotal] = useState(0);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [toastProgress, setToastProgress] = useState(100);
 
   useEffect(() => {
     getAll();
@@ -30,12 +32,20 @@ function OrdersProvider({ children }) {
   }
 
   async function addOrder(productCode) {
+    startProgress();
     axios
       .post("http://localhost:3006/orders", { productCode })
       .then(() => getAll())
+      .then(() => {
+        setShowSuccessToast(true);
+        setTimeout(() => {
+          setShowSuccessToast(false);
+        }, 2000);
+      })
       .catch((err) => {
         alert(`Erro ao adicionar no carrinho: ${err}`);
       });
+    setToastProgress(0);
   }
 
   async function removeOrder(productCode) {
@@ -49,6 +59,23 @@ function OrdersProvider({ children }) {
       });
   }
 
+  const startProgress = () => {
+    const interval = 2; // Atualizar a cada 20ms
+    const totalTime = 2000; // 2 segundos
+    const steps = totalTime / interval;
+    const increment = 1000 / steps;
+
+    let currentProgress = 0;
+    const progressInterval = setInterval(() => {
+      currentProgress += increment;
+      setToastProgress(currentProgress);
+
+      if (currentProgress >= 100) {
+        clearInterval(progressInterval);
+      }
+    }, interval);
+  };
+
   return (
     <OrdersContext.Provider
       value={{
@@ -56,6 +83,9 @@ function OrdersProvider({ children }) {
         total,
         addOrder,
         removeOrder,
+        showSuccessToast,
+        toastProgress,
+        setToastProgress,
       }}
     >
       {children}

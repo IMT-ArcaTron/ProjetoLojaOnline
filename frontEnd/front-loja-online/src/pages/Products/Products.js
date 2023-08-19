@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "../../components/NavBar";
 import ProductCard from "./components/productCard";
-import axios from "axios";
 import { ProductContext } from "../../controllers/productContext";
+import Toast from "./components/toast";
 
 export default function Products() {
   const { allProducts } = useContext(ProductContext);
@@ -14,6 +13,7 @@ export default function Products() {
       <div />
       <div className="Container-title">
         <h1 className="title-default">Produtos</h1>
+        <Toast />
       </div>
       <div
         style={{
