@@ -23,12 +23,36 @@ export default function CarShop() {
           <div>Seu carrinho está vazio</div>
         )}
       </section>
-      <section>
+      <section
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         {orders.length > 0 ? (
-          <>
-            <div>Total</div>
-            <div>R$ {total}</div>
-          </>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                padding: "10px 80px",
+                background: "#284184",
+                color: "#00EAFF",
+                fontSize: "24px",
+                marginBottom: "10px",
+              }}
+            >
+              Total
+            </div>
+            <div
+              style={{
+                padding: "10px 80px",
+                background: "#284184",
+                color: "#00EAFF",
+                fontSize: "24px",
+              }}
+            >
+              R$ {total}
+            </div>
+          </div>
         ) : (
           ""
         )}
