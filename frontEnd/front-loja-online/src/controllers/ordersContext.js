@@ -76,6 +76,12 @@ function OrdersProvider({ children }) {
     }, interval);
   };
 
+  function resetState() {
+    orders.forEach((order) => {
+      removeOrder(order.product[0].code);
+    });
+  }
+
   return (
     <OrdersContext.Provider
       value={{
@@ -86,6 +92,7 @@ function OrdersProvider({ children }) {
         showSuccessToast,
         toastProgress,
         setToastProgress,
+        resetState,
       }}
     >
       {children}
