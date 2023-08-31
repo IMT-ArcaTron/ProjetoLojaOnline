@@ -20,24 +20,31 @@ export default function CarShop() {
             <OrderCard order={order.product[0]} quantity={order.quantity} />
           ))
         ) : (
-          <div>Seu carrinho está vazio</div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            Seu carrinho está vazio
+          </div>
         )}
       </section>
       <section
         style={{
           display: "flex",
           justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         {orders.length > 0 ? (
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
-                padding: "10px 80px",
+                padding: "3px 40px",
                 background: "#284184",
                 color: "#00EAFF",
                 fontSize: "24px",
                 marginBottom: "10px",
+                textAlign: "center",
+                borderRadius: "5px 5px 0 0",
+                maxWidth: "270px",
               }}
             >
               Total
@@ -48,6 +55,8 @@ export default function CarShop() {
                 background: "#284184",
                 color: "#00EAFF",
                 fontSize: "24px",
+                borderRadius: "0 0 5px 5px",
+                maxWidth: "270px",
               }}
             >
               R$ {total}
@@ -56,6 +65,11 @@ export default function CarShop() {
         ) : (
           ""
         )}
+        <div style={{ marginTop: "40%" }}>
+          <Link to="/checkout">
+            <div className="button-default">Comprar</div>
+          </Link>
+        </div>
       </section>
     </div>
   );
