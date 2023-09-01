@@ -51,8 +51,10 @@ npm start
 <br/>
 
 #### Após realizar o login o usuário será redirecionado para uma página de produtos
+ # **> ATUZALIZAR FOTO DOS PRODUTOS**
 
-![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/ea89dccb-dc8e-46f7-a185-f7332ed6cbbd)
+<br/>
 
-
-
+#### Na página de produtos o usuário poderá adicionar e remover itens do carrinho, e ver todos os itens incluídos no carrinho
+ 
+ # **> INSERIR FOTOS CARRINHO**

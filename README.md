@@ -21,11 +21,10 @@
 
 # 🚀 Primeiro Release
 ## `mss-user`
-### Microserviço de cadastro, armazenamento e gerenciamento de usuários
+### - Microserviço de cadastro, armazenamento e gerenciamento de usuários
 
-<br/>
 
-### Utilizado para realizar login
+### - Utilizado para realizar login
 
 <br/>
 <br/>
@@ -54,6 +53,9 @@
 ### - Ainda não implementado com o restante do sistema
 > Para mais informações ler README na pasta frontEnd 
 
+<br/>
+<br/>
+
 # 🚀 Terceiro Release
 ## `barramento de eventos`
 ### - Barramento de eventos realiza a comunicação entre os microserviços 
@@ -65,3 +67,15 @@
 ## `Integração frontEnd - backEnd`
 ### - Realizada a integração entre o Front-End e o Back-end
 ### - Agora é possível realizar os testes das requisições dos microserviços utilizando o console do navegados
+
+<br/>
+<br/>
+
+# 🚀 Último Release
+## `Integração final frontEnd - backEnd`
+### - Realizada a integração final entre o fronteEnd e o backEnd
+### - É possível acessar o site, fazer login e/ou criar conta. Após o login o usuário é redirecionado para a loja
+### - Agora é possível navegar entre os produtos pré-cadastrados, adicioná-los e removê-los do carrinho. Por fim ver todos os itens do carrinho
+
+## `Video do funcionamento`
+# **> INSERIR VÍDEO DO YOUTUBE COM O SISTEMA FUNCIONANDO**
