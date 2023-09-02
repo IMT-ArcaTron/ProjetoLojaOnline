@@ -50,9 +50,19 @@ npm start
 
 <br/>
 
-#### Após realizar o login o usuário será redirecionado para uma página de produtos
+#### Após realizar o login o usuário será redirecionado para uma página de produtos. Na página de produtos ele poderá navegar entre eles e adicioná-los ao carrinho
+![image](produtos.png)
 
-![image](https://github.com/IMT-ArcaTron/ProjetoLojaOnline/assets/100366691/ea89dccb-dc8e-46f7-a185-f7332ed6cbbd)
+<br/>
 
+#### Na página de carrinho o usuário poderá ver todos os itens do carrinho, ver o valor total da compra e a remover os itens conforme desejar
+![image](carrinho.png)
 
+<br/>
 
+#### Ao clicar em `Comprar` o usuário conclui a compra atual com os itens presentes no carrinho e limpa os itens nele
+![Alt text](comprafinalizada.png)
+
+<br/>
+
+#### Por fim o usuário pode clicar em `Sair` para efetuar o logout da conta

@@ -15,11 +15,15 @@ export default function OrderCard({ order, quantity }) {
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <strong>{quantity}x</strong> {order.name} - R${order.price}
         <button
-          type="submit"
-          className="btn btn-primary"
+          style={{
+            background: "#284184",
+            border: "none",
+            padding: "6px 10px",
+            borderRadius: "5px",
+          }}
           onClick={() => removeOrder(order.code)}
         >
-          <DeleteIcon />
+          <DeleteIcon style={{ color: "#00EAFF" }} />
         </button>
       </div>
     </>
