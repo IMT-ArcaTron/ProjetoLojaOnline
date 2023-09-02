@@ -66,7 +66,7 @@
 
 ## `Integração frontEnd - backEnd`
 ### - Realizada a integração entre o Front-End e o Back-end
-### - Agora é possível realizar os testes das requisições dos microserviços utilizando o console do navegados
+### - Agora é possível realizar os testes das requisições dos microserviços utilizando o console do navegador
 
 <br/>
 <br/>
