@@ -75,9 +75,10 @@
 ## `Integração final frontEnd - backEnd`
 ### - Realizada a integração final entre o fronteEnd e o backEnd
 ### - É possível acessar o site, fazer login e/ou criar conta. Após o login o usuário é redirecionado para a loja
-### - Agora é possível navegar entre os produtos pré-cadastrados, adicioná-los e removê-los do carrinho. Por fim ver todos os itens do carrinho e encerrar a conta
+### - Agora é possível navegar entre os produtos pré-cadastrados, adicioná-los e removê-los do carrinho. Por fim ver todos os itens do carrinho e encerrar a compra
 
 ## `Video do funcionamento`
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UPx78zR-3AM?si=AuuuSMen9Peiw-nF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
  > https://youtu.be/UPx78zR-3AM
