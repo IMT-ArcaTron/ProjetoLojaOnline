@@ -93,6 +93,7 @@
 
 # 🏁 **PARTE 2 DO PROJETO**
 # 🚀 Primeiro Release
+> Agora é necessário iniciar o barramento de eventos antes dos demais microserviços
 ## Atualização de `mss-user`
 ### - Microserviço de cadastro, armazenamento e gerenciamento de usuários agora envia todos os eventos para o barramento de eventos e recupera eventos armazenados no barramento ao iniciar
 
