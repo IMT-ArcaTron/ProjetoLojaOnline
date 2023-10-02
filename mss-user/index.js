@@ -1,7 +1,7 @@
 // Imports
 // dotenv - ambiente de execução
 require("dotenv").config();
-const axios = require ("axios")
+const axios = require("axios")
 // express - framework de servidor
 const express = require("express");
 const app = express();
@@ -18,10 +18,18 @@ const users = [];
 // codigo sequencial de usuario
 let userCode = 0;
 
-// POST
-// criacao de novo usuario
-app.post("/users", async (req, res) => {
-  try {
+
+// Variables
+// buffers para comunicar os resultados entre funções por meio de varáveis globais
+var newUserBuffer = {}
+var editUserBuffer = {}
+var deleteUserBuffer = {}
+
+// Functions
+// Funções do código
+const funcoes = {
+  createUser: async (req, res) => {
+    // console.log(req.body)
     const { name, phone, email, password, address } = req.body;
     // email considerado como imutavel
     // usado para localizar usuarios
@@ -39,17 +47,70 @@ app.post("/users", async (req, res) => {
       password: hashPassword,
       address: address,
     };
-
     if (!found) {
       users.push(newUser);
       // response em json
-      res.status(201).json(newUser);
-      //// response em string
-      //res.status(201).send(`User created: ${JSON.stringify(newUser)}`);
+      try { res.status(201).json(newUser) } catch { }
+      newUserBuffer = newUser
     } else {
       res.status(403);
       res.send("User already exists");
     }
+  },
+
+  editUser: (req, res) => {
+    console.log(req.body)
+    // procura usuario com email correspondente
+    const found = users.find((user) => user.email == req.body.email);
+    // obtem indice do usuario
+    const index = users.indexOf(found);
+    // console.log(users)  //debug
+    // console.log(index) //debug
+    // console.log(users[index]) //debug
+    // atualiza apenas os campos nao nulos
+    // if (req.body.name !== undefined) {
+    //   users[index].name = req.body.name;
+    // }
+    // if (req.body.phone !== undefined) {
+    //   users[index].phone = req.body.phone;
+    // }
+    // if (req.body.address !== undefined) {
+    //   users[index].address = req.body.address;
+    // }
+    // response em json
+    try { res.status(201).json(users[index]) } catch { }
+    editUserBuffer = users[index]
+  },
+
+  deleteUser: async (req, res) => {
+    console.log('delete:', users) //debug
+    // procura usuario com email correspondente
+    const found = users.find((user) => user.email == req.body.email);
+    // obtem indice do usuario
+    const index = users.indexOf(found);
+    deleteUserBuffer = users[index];
+    // deleta usuario
+    users.splice(index, 1);
+    // response em json
+    try { res.status(200).type("application/json").send(users) } catch { }
+  }
+}
+
+
+
+
+
+
+// POST
+// criacao de novo usuario
+app.post("/users", async (req, res) => {
+  try {
+    await funcoes['createUser'](req, res)
+    // envia o novo usuario para a base de consulta no barramento de eventos
+    await axios.post('http://localhost:3100/events', {
+      occurence: 'createUser',
+      data: newUserBuffer
+    })
   } catch (error) {
     console.log(error);
     res.status(500).json({ erro: "Internal Server Error" });
@@ -64,34 +125,18 @@ app.get("/users", (req, res) => {
 
 // PUT
 // atualizar dados de usuarios
-app.put("/users", (req, res) => {
+app.put("/users", async (req, res) => {
   // procura usuario com email correspondente
   const found = users.find((user) => user.email == req.body.email);
   // obtem indice do usuario
   const index = users.indexOf(found);
   if (found) {
-    // atualiza apenas os campos nao nulos
-    if (req.body.name !== undefined) {
-      users[index].name = req.body.name;
-    }
-
-    if (req.body.phone !== undefined) {
-      users[index].phone = req.body.phone;
-    }
-
-    if (req.body.address !== undefined) {
-      users[index].address = req.body.address;
-    }
-
-    //// ainda sem middleware de auth, por isso sem possibilidade de troca de senha
-    // if (req.body.password !== undefined) {
-    //   users[index].password = req.body.password;
-    // }
-
-    // response em json
-    res.status(201).json(users[index]);
-    //// response em string
-    // res.status(200).send(`User updated: ${JSON.stringify(users[index])}`);
+    await funcoes['editUser'](req, res)
+    // envia o novo usuario para a base de consulta no barramento de eventos
+    await axios.post('http://localhost:3100/events', {
+      occurence: 'editUser',
+      data: editUserBuffer
+    })
   } else {
     res.status(401).send(`Error to update this user: ${req.body.email}`);
   }
@@ -104,12 +149,14 @@ app.delete("/users", async (req, res) => {
     // procura usuario com email correspondente
     const found = users.find((user) => user.email == req.body.email);
     // obtem indice do usuario
-    const index = users.indexOf(found);
+    const index = users.indexOf(found)
     if (found) {
-      // deleta usuario
-      users.splice(index, 1);
-      // response em json
-      res.status(200).type("application/json").send(users);
+      await funcoes['deleteUser'](req, res)
+      console.log(deleteUserBuffer)
+      await axios.post('http://localhost:3100/events', {
+        occurence: 'deleteUser',
+        data: deleteUserBuffer
+      })
     } else {
       res.status(404).send(`User ${req.body.email} not found`);
     }
@@ -118,6 +165,8 @@ app.delete("/users", async (req, res) => {
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
+
+
 
 // POST
 // prototipo de login funcional
@@ -142,15 +191,35 @@ app.post("/login", async (req, res) => {
       res.status(401).send("E-mail or password invalid");
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ erro: "Internal Server Error" });
   }
 });
 
-app.post('/events', (req,res) => {
+app.post('/events', (req, res) => {
   const event = req.body
-  console.log(req.body)
-  res.status(200).send({msg: 'ok'}) 
+  // console.log(req.body)
+  res.status(200).send({ msg: 'ok' })
 })
 
-app.listen(port, () => console.log(`Listening on port: ${port}`));
+
+
+
+
+
+// Aplication Start
+app.listen(port, async () => {
+  console.log(`mss-user porta: ${port}`)
+  const resp = await axios.get("http://localhost:3100/events/user")
+  resp.data.forEach(async (item) => {
+    try {
+      // console.log(item.occurence)
+      // console.log(item.data)
+      var dataBuffer = { 'body': item.data }
+      await funcoes[item.occurence](dataBuffer)
+    } catch (err) {
+      console.log(err)
+    }
+    console.log(users)
+  });
+});

@@ -1,6 +1,7 @@
 # Projeto Loja Online ArcaTron
 ---
-#### Versão: 1.0
+#### Versão: 2.0
+>Este README.md engloba as duas partes do projeto
 ---
 
 <br/>
@@ -19,6 +20,9 @@
 <br/>
 <br/>
 
+---
+
+# 🏁 **PARTE 1 DO PROJETO**
 # 🚀 Primeiro Release
 ## `mss-user`
 ### - Microserviço de cadastro, armazenamento e gerenciamento de usuários
@@ -79,3 +83,18 @@
 
 ## `Video do funcionamento`
  > # https://youtu.be/UPx78zR-3AM
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+ ---
+
+# 🏁 **PARTE 2 DO PROJETO**
+# 🚀 Primeiro Release
+## Atualização de `mss-user`
+### - Microserviço de cadastro, armazenamento e gerenciamento de usuários agora envia todos os eventos para o barramento de eventos e recupera eventos armazenados no barramento ao iniciar
+
+## Dockerização de `mss-user`
+### - ESCREVER
