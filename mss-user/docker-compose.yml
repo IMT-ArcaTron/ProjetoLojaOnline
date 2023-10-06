@@ -1,0 +1,8 @@
+version: '3'
+services:
+  mss-user:
+    build:
+      context: ./mss-user
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"

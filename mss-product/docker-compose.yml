@@ -1,0 +1,8 @@
+version: '3'
+services:
+  mss-product:
+    build:
+      context: ./mss-product
+      dockerfile: Dockerfile
+    ports:
+      - "3006:3006"

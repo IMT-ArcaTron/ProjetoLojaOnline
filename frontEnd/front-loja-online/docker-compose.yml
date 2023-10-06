@@ -1,0 +1,9 @@
+version: '3'
+services:
+  front-loja-online:
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    volumes:
+      - ./front-loja-online/build:/usr/share/nginx/html
+    restart: always
