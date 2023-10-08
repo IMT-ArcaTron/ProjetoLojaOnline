@@ -7,7 +7,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 // bcrypt - encriptacao
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const port = process.env.PORT || 3005;
 
 const cors = require("cors");
