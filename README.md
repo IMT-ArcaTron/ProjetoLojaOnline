@@ -1,6 +1,7 @@
 # Projeto Loja Online ArcaTron
 ---
-#### Versão: 1.0
+#### Versão: 2.0
+>Este README.md engloba as duas partes do projeto
 ---
 
 <br/>
@@ -19,6 +20,9 @@
 <br/>
 <br/>
 
+---
+
+# 🏁 **PARTE 1 DO PROJETO**
 # 🚀 Primeiro Release
 ## `mss-user`
 ### - Microserviço de cadastro, armazenamento e gerenciamento de usuários
@@ -79,3 +83,40 @@
 
 ## `Video do funcionamento`
  > # https://youtu.be/UPx78zR-3AM
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+ ---
+
+# 🏁 **PARTE 2 DO PROJETO**
+# 🚀 Primeiro Release
+### - Dockerização de `mss-user`
+### - Dockerização de `mss-product`
+### - Dockerização de `barramento-eventos`
+## Instruções de inicialização
+### Caso possua GitBash instalado, ou esteja utilizando sistema operacional Linux/MacOS utilize o comando:
+```bash
+./run_all_containers.sh
+```
+### Esse script inicializará todos os conatiners automaticamente
+
+</br>
+
+### Caso esteja no Windows, em terminais diferentes utilize os comandos:
+``` cmd
+cd barramento-eventos
+docker-compose up -d
+```
+
+``` cmd
+cd mss-user
+docker build -t mss-user . && docker run -d -p 3005:3005 mss-user
+```
+
+``` cmd
+cd mss-product
+docker-compose up -d
+```
