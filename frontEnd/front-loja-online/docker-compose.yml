@@ -1,0 +1,17 @@
+version: '3'
+services:
+  front-loja-online:
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    volumes:
+      - ./front-loja-online/build:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf # Caminho para o arquivo de configuração do Nginx
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./front-loja-online/nginx.conf:/etc/nginx/conf.d/nginx.conf # Caminho para o arquivo de configuração do Nginx
+    ports:
+      - "8080:80" # Porta para o servidor Nginx (pode ser diferente da porta do aplicativo React)
