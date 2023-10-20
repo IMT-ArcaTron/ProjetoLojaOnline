@@ -1,0 +1,20 @@
+name: Testes unitários automatizados
+
+on: [push]
+
+jobs:
+  testes:
+    name: Testes TDD
+    runs-on: ubunto-latest
+
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v2
+
+      - name: Config Node
+        uses: actions/setup-node@v3
+
+      - name: Install Deps
+        run: npm install
+
+      - name:
