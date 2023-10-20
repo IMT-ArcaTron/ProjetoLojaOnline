@@ -17,11 +17,8 @@ jobs:
       - name: Install npm
         run: sudo apt install npm
 
-      - name: Go to package.json
-        run: cd mss-product/
-
       - name: Install Dependencies
-        run: npm install
+        run: npm install ./mss-product/package.json
 
       - name: Run tests
         run: npx jest ./mss-product/tests/repositories/orderRepositoryTest.test.js
