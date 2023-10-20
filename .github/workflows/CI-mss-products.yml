@@ -5,7 +5,7 @@ on: [push]
 jobs:
   testes:
     name: Testes TDD
-    runs-on: ubunto-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Get Code
