@@ -14,11 +14,8 @@ jobs:
       - name: Config Node
         uses: actions/setup-node@v3
 
-      - name: Install npm
-        run: sudo apt install npm
-
       - name: Install Dependencies
-        run: npm install ./mss-product/package.json
-
+        run: npm install ./mss-product/
+        
       - name: Run tests
         run: npx jest ./mss-product/tests/repositories/orderRepositoryTest.test.js
