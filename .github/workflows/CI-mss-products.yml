@@ -14,7 +14,8 @@ jobs:
       - name: Config Node
         uses: actions/setup-node@v3
 
-      - name: Install Deps
+      - name: Install Dependencies
         run: npm install
 
-      - name:
+      - name: Run tests
+        run: npx jest ./mss-product/tests/repositories/orderRepositoryTest.test.js
