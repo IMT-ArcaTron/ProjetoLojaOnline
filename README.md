@@ -120,3 +120,14 @@ docker build -t mss-user . && docker run -d -p 3005:3005 mss-user
 cd mss-product
 docker-compose up -d
 ```
+
+</br>
+</br>
+
+# 🚀 Segundo Release
+### - Kubernetes de `mss-user`
+### - Kubernetes de `mss-product`
+### - Kubernetes de `barramento-eventos`
+
+
+## Instruções de inicialização

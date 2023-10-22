@@ -13,6 +13,6 @@ spec:
     - name: mss-product
       protocol: TCP
       # o nó recebe requisições nessa porta
-      port: 4000
+      port: 3005
       # e direciona para esta porta do Pod
-      targetPort: 4000
+      targetPort: 3005
