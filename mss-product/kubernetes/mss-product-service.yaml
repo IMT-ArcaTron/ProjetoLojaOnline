@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mss-product-service
+spec:
+  #Ip externo, acessível fora do cluster
+  type: NodePort
+  selector:
+    #todo Pod que tiver esta tag
+    #fará parte deste serviço
+    app: mss-product
+  ports:
+    - name: mss-product
+      protocol: TCP
+      # o nó recebe requisições nessa porta
+      port: 3006
+      # e direciona para esta porta do Pod
+      targetPort: 3006
