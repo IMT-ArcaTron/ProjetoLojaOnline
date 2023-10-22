@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: mss-user
-          image: arcatron/mss-user
+          image: caiobrunholi/arcatron-mss-user
           resources:
             limits:
               memory: 256Mi
@@ -42,5 +42,5 @@ spec:
   ports:
     - name: mss-user
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 3005
+      targetPort: 3005
