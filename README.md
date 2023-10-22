@@ -129,5 +129,30 @@ docker-compose up -d
 ### - Kubernetes de `mss-product`
 ### - Kubernetes de `barramento-eventos`
 
+## Descrição
+### Os arquivos `[MSS]-deployment.yaml` são responsáveis por buscar as imagens `docker` no Docker Hub e iniciar o serviço de `ClusterIp` que expõe a porta do container dentro do cluster
+### Os arquivos `[MSS]-service.yaml` são responsáveis por iniciar o serviço de `NodePort` que expõe as portas dos containers internos ao cluster ao ambiente externo (nesse caso a máquina host)
 
 ## Instruções de inicialização
+### Acesse as pastas `/kubernetes` de cada microserviço e utilize os comandos de implantação
+``` cmd
+cd barramento-eventos/kubernetes
+
+kubectl apply -f barramento-eventos-deployment.yaml
+
+kubectl apply -f barramento-eventos-service.yaml
+```
+``` cmd
+cd mss-product/kubernetes
+
+kubectl apply -f mss-product-deployment.yaml
+
+kubectl apply -f mss-product-service.yaml
+```
+``` cmd
+cd mss-user/kubernetes
+
+kubectl apply -f mss-user-deployment.yaml
+
+kubectl apply -f mss-user-service.yaml
+```
