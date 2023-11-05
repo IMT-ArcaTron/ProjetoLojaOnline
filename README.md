@@ -156,3 +156,11 @@ kubectl apply -f mss-user-deployment.yaml
 
 kubectl apply -f mss-user-service.yaml
 ```
+
+</br>
+</br>
+
+# 🚀 Terceiro Release
+### - Implementação do novo Front-End em `flutter` com integração com o primeiro microsserviço `mss-user`
+> No momento ele está usando o serviço local, mas será implementado utilizando o cluster kubernetes
+### Para mais informações acesse a pasta `frontEnd/front_loja_online_flutter`
