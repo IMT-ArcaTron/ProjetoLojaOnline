@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:front_loja_online_flutter/src/blocs/bloc.dart';
 import 'package:front_loja_online_flutter/src/blocs/provider.dart';
+import 'package:front_loja_online_flutter/src/blocs/registro_bloc.dart';
 
 class RegistroTela extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
@@ -13,7 +13,7 @@ class RegistroTela extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of(context);
+    final bloc = RegistroProvider.of(context);
     return Scaffold(
         appBar: AppBar(
           title: Text('Cadastro de Conta'),
@@ -139,7 +139,7 @@ class RegistroTela extends StatelessWidget {
   //   );
   // }
 
-  Widget submitButton(Bloc bloc) {
+  Widget submitButton(RegistroBloc bloc) {
     return ElevatedButton(
       onPressed: () {
         final name = _nameController.text;
@@ -160,102 +160,3 @@ class RegistroTela extends StatelessWidget {
     );
   }
 }
-
-// class RegistroTela extends StatefulWidget {
-//   const RegistroTela({super.key});
-
-//   @override
-//   // ignore: library_private_types_in_public_api
-//   _RegistroTelaState createState() => _RegistroTelaState();
-// }
-
-// class _RegistroTelaState extends State<RegistroTela> {
-//   final TextEditingController _nameController = TextEditingController();
-//   final TextEditingController _phoneController = TextEditingController();
-//   final TextEditingController _addressController = TextEditingController();
-//   final TextEditingController _emailController = TextEditingController();
-//   final TextEditingController _passwordController = TextEditingController();
-
-//   void _handleRegistro() {
-//     final name = _nameController.text;
-//     final phone = _phoneController.text;
-//     final address = _addressController.text;
-//     final email = _emailController.text;
-//     final password = _passwordController.text;
-
-//     // Adicione aqui a lógica para enviar os dados de registro ao servidor
-
-//     print('Nome: $name');
-//     print('Telefone: $phone');
-//     print('Endereço: $address');
-//     print('Email: $email');
-//     print('Senha: $password');
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Cadastro de Conta'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             TextField(
-//               controller: _nameController,
-//               decoration:
-//                   const InputDecoration(labelText: 'Nome', hintText: 'Fulano Silva'),
-//             ),
-//             SizedBox(height: 16.0),
-//             TextField(
-//               controller: _phoneController,
-//               decoration: const InputDecoration(
-//                   labelText: 'Telefone', hintText: '(XX) xxxxx-xxxx'),
-//             ),
-//             const SizedBox(height: 16.0),
-//             TextField(
-//               controller: _addressController,
-//               decoration: const InputDecoration(
-//                   labelText: 'Endereço', hintText: 'Rua dos Limoeiros, 110'),
-//             ),
-//             const SizedBox(height: 16.0),
-//             TextField(
-//               controller: _emailController,
-//               decoration: const InputDecoration(
-//                   labelText: 'Email', hintText: 'seu@email.com'),
-//             ),
-//             const SizedBox(height: 16.0),
-//             TextField(
-//               controller: _passwordController,
-//               obscureText: true,
-//               decoration:
-//                   const InputDecoration(labelText: 'Senha', hintText: 'Senha'),
-//             ),
-//             const SizedBox(height: 16.0),
-//             ElevatedButton(
-//               onPressed: _handleRegistro,
-//               child: const Text('Registrar'),
-//             ),
-//             SizedBox(height: 16.0),
-//             const Text(
-//               'Já possui uma conta?',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 // Navegar de volta para a tela de login
-//                 Navigator.pop(context);
-//               },
-//               child: const Text(
-//                 'Entrar',
-//                 style: TextStyle(color: Colors.blue),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -3,7 +3,7 @@ import 'package:front_loja_online_flutter/src/blocs/validators.dart';
 import 'package:front_loja_online_flutter/src/externals/mss_user.dart';
 import 'package:flutter/foundation.dart';
 
-class Bloc with Validators {
+class RegistroBloc with Validators {
   final _emailController = StreamController<String>();
   final _passwordController = StreamController<String>();
   final ValueNotifier<bool> _isLoggedController = ValueNotifier<bool>(false);

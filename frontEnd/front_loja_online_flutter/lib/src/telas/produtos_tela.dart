@@ -1,27 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:front_loja_online_flutter/src/blocs/produtos_bloc.dart';
 import 'package:front_loja_online_flutter/src/componentes/produto_card.dart';
+import 'package:front_loja_online_flutter/src/entities/product.dart';
 
 class ProdutosTela extends StatelessWidget {
-  const ProdutosTela({super.key});
+  const ProdutosTela({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    // final allProducts = ProductContext.of(context).allProducts;
-    // final addOrder = OrdersContext.of(context).addOrder;
-    final allProducts = <Product>[
-      Product(
-        code: 1,
-        name: 'Produto 1',
-        urlPhoto: 'https://picsum.photos/200/300',
-        price: 10.0,
-      ),
-      Product(
-        code: 2,
-        name: 'Produto 2',
-        urlPhoto: 'https://picsum.photos/200/300',
-        price: 20.0,
-      ),
-    ];
+    final produtosBloc = ProdutosBloc(); // Instancia o bloc
+    produtosBloc.getAllProducts(); // Chama o método para obter os produtos
 
     return Scaffold(
       appBar: AppBar(
@@ -41,41 +29,40 @@ class ProdutosTela extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                // Toast(),
               ],
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: allProducts.length,
-              itemBuilder: (context, index) {
-                final product = allProducts[index];
-                return Padding(
-                  padding: EdgeInsets.all(10),
-                  child: ProdutoCard(
-                    product: product,
-                    // addOrder: addOrder,
+          StreamBuilder<List<Product>>(
+            stream:
+                produtosBloc.allProducts, // Obtém o stream de produtos do bloc
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final allProducts =
+                    snapshot.data!; // Obtém a lista de produtos do snapshot
+
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: allProducts.length,
+                    itemBuilder: (context, index) {
+                      final product = allProducts[index];
+                      return Padding(
+                        padding: EdgeInsets.all(10),
+                        child: ProdutoCard(
+                          product: product,
+                        ),
+                      );
+                    },
                   ),
                 );
-              },
-            ),
+              } else if (snapshot.hasError) {
+                return Text('Erro ao obter produtos');
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
           ),
         ],
       ),
     );
   }
-}
-
-class Product {
-  final int code;
-  final String name;
-  final String urlPhoto;
-  final double price;
-
-  Product({
-    required this.code,
-    required this.name,
-    required this.urlPhoto,
-    required this.price,
-  });
 }
