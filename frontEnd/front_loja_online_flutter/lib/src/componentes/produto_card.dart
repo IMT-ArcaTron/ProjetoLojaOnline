@@ -27,9 +27,10 @@ class ProdutoCard extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('${product.name} - R\$${product.price}'),
+            const SizedBox(width: 10),
             ElevatedButton.icon(
               // onPressed: () => addOrder(product.code),
               onPressed: () => print('Adicionado ao carrinho'),
