@@ -31,31 +31,34 @@ class LoginTela extends StatelessWidget {
   Widget buildLoginForm(BuildContext context, LoginBloc bloc, bool isLogged) {
     // bloc.reset(); // Reinicia o estado do Stream
 
-    return Container(
-      margin: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Image.asset('assets/images/logo.png'),
-          emailField(context, bloc),
-          passwordField(context, bloc),
-          Container(
-            margin: const EdgeInsets.only(top: 12.0),
-            child: Row(
-              children: [
-                Expanded(child: submitButton(context, bloc)),
-              ],
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 300),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/logo.png'),
+            emailField(context, bloc),
+            passwordField(context, bloc),
+            Container(
+              margin: const EdgeInsets.only(top: 12.0),
+              child: Row(
+                children: [
+                  Expanded(child: submitButton(context, bloc)),
+                ],
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegistroTela()),
-              );
-            },
-            child: Text("Ainda não possui login? Registre-se"),
-          ),
-        ],
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegistroTela()),
+                );
+              },
+              child: Text("Ainda não possui login? Registre-se"),
+            ),
+          ],
+        ),
       ),
     );
   }
