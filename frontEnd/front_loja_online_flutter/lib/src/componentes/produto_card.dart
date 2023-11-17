@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:front_loja_online_flutter/src/entities/product.dart';
-import 'package:front_loja_online_flutter/src/telas/produtos_tela.dart';
-// import 'package:your_app/controllers/orders_context.dart';
-// import 'package:your_app/models/product.dart';
 
 class ProdutoCard extends StatelessWidget {
   final Product product;
-  // final Function(int) addOrder;
+  final bool isOnOrders;
+  final Function(int) addOrRemoveOrder;
 
   const ProdutoCard({
     super.key,
     required this.product,
-    // required this.addOrder,
+    required this.isOnOrders,
+    required this.addOrRemoveOrder,
   });
 
   @override
@@ -19,13 +18,13 @@ class ProdutoCard extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Image.network(
             product.urlPhoto,
             width: 220,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -33,9 +32,13 @@ class ProdutoCard extends StatelessWidget {
             const SizedBox(width: 10),
             ElevatedButton.icon(
               // onPressed: () => addOrder(product.code),
-              onPressed: () => print('Adicionado ao carrinho'),
-              icon: Icon(Icons.add_shopping_cart),
-              label: Text('Adicionar ao carrinho'),
+              onPressed: () => addOrRemoveOrder(product.code),
+              icon: isOnOrders
+                  ? const Icon(Icons.remove_shopping_cart)
+                  : const Icon(Icons.add_shopping_cart),
+              label: isOnOrders
+                  ? const Text('Remover do carrinho')
+                  : const Text('Adicionar ao carrinho'),
             ),
           ],
         ),

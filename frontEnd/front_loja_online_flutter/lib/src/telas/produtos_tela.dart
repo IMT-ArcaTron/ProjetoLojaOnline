@@ -1,37 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:front_loja_online_flutter/src/blocs/carrinho_bloc.dart';
+import 'package:front_loja_online_flutter/src/blocs/login_bloc.dart';
 import 'package:front_loja_online_flutter/src/blocs/produtos_bloc.dart';
 import 'package:front_loja_online_flutter/src/componentes/produto_card.dart';
 import 'package:front_loja_online_flutter/src/entities/product.dart';
+import 'package:front_loja_online_flutter/src/telas/carrinho_tela.dart';
+import 'package:front_loja_online_flutter/src/telas/login_tela.dart';
 
 class ProdutosTela extends StatelessWidget {
-  const ProdutosTela({Key? key});
+  const ProdutosTela({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final produtosBloc = ProdutosBloc(); // Instancia o bloc
+    final produtosBloc = ProdutosBloc();
+    final carrinhoBloc = CarrinhoBloc();
+    final loginBloc = LoginBloc();
     produtosBloc.getAllProducts(); // Chama o método para obter os produtos
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Produtos'),
+        automaticallyImplyLeading: false,
+        title: const Text('Produtos'),
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height * 0.6, right: 20),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 80,
+            ),
+            FloatingActionButton(
+              onPressed: () => {loginBloc.logout()},
+              child: const Icon(Icons.exit_to_app),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            FloatingActionButton(
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CarrinhoTela()),
+                )
+              },
+              child: const Icon(Icons.shopping_cart),
+            ),
+          ],
+        ),
+        // ),
       ),
       body: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(20),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Produtos',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
           StreamBuilder<List<Product>>(
             stream:
                 produtosBloc.allProducts, // Obtém o stream de produtos do bloc
@@ -46,8 +66,10 @@ class ProdutosTela extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final product = allProducts[index];
                       return Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: ProdutoCard(
+                          addOrRemoveOrder: carrinhoBloc.addToOrders,
+                          isOnOrders: false,
                           product: product,
                         ),
                       );
@@ -55,9 +77,9 @@ class ProdutosTela extends StatelessWidget {
                   ),
                 );
               } else if (snapshot.hasError) {
-                return Text('Erro ao obter produtos');
+                return const Text('Erro ao obter produtos');
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             },
           ),

@@ -63,6 +63,10 @@ class LoginBloc with Validators {
     }
   }
 
+  Future<void> logout() async {
+    _isLoggedController.value = false;
+  }
+
   Future<void> register(String regName, String regPhone, String regAddress,
       String regEmail, String regPassword) async {
     try {
