@@ -8,13 +8,15 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // empacotar MaterialApp com um provider
-    return Provider(
+    return RegistroProvider(
+      child: LoginProvider(
+          child: ProdutosProvider(
         child: const MaterialApp(
             title: 'Login',
             home: Scaffold(
               body: LoginTela(),
-            )
-        )
+            )),
+      )),
     );
   }
 }
