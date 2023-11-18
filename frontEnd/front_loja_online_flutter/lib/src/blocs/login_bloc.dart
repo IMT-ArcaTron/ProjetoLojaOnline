@@ -2,10 +2,14 @@ import 'dart:async';
 import 'package:front_loja_online_flutter/src/blocs/validators.dart';
 import 'package:front_loja_online_flutter/src/externals/mss_user.dart';
 import 'package:flutter/foundation.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:flutter/material.dart';
 
 class LoginBloc with Validators {
-  final _emailController = StreamController<String>();
-  final _passwordController = StreamController<String>();
+  final _emailController = BehaviorSubject<String>();
+  final _passwordController = BehaviorSubject<String>();
+
   final ValueNotifier<bool> _isLoggedController = ValueNotifier<bool>(false);
   final _isRegisteredController = StreamController<bool>();
   final StreamController<String> _userMessageController =
@@ -25,8 +29,6 @@ class LoginBloc with Validators {
   late String _email;
   late String _password;
   late bool _isRegistered = false;
-  late String _userMessage = 'placeholder';
-  late String _userMessageRegister = 'placeholder';
 
   final _mssUser = MssUser();
 
@@ -53,6 +55,9 @@ class LoginBloc with Validators {
         _isLoggedController.value = false;
         if (res == 401) {
           _userMessageController.sink.add("Email ou senha incorretos!");
+          CherryToast.success(
+      title: Text("Email ou senha incorretos!").,
+      );
         } else {
           _userMessageController.sink.add("Verifique o Microserviço!");
         }

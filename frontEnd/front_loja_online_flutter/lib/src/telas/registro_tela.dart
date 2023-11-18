@@ -26,12 +26,12 @@ class RegistroTela extends StatelessWidget {
               nameField(),
               phoneField(),
               addressFied(),
-              emailField(),
-              passwordField(),
+              emailField(context, bloc),
+              passwordField(context, bloc),
               Container(
                   margin: const EdgeInsets.only(top: 12.0),
                   child: Row(children: [
-                    Expanded(child: submitButton(bloc)),
+                    Expanded(child: submitButton(context, bloc)),
                   ])),
               StreamBuilder<String>(
                 stream: bloc.userMessageRegister,
@@ -85,61 +85,41 @@ class RegistroTela extends StatelessWidget {
     );
   }
 
-  Widget emailField() {
-    return TextField(
-      controller: _emailController,
-      decoration:
-          const InputDecoration(labelText: 'Email', hintText: 'seu@email.com'),
+ Widget emailField(BuildContext context, RegistroBloc bloc) {
+    return StreamBuilder<String>(
+      stream: bloc.email,
+      builder: (context, snapshot) {
+        return TextField(
+          onChanged: bloc.changeEmail,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            hintText: 'seu@email.com',
+            labelText: 'Endereço de e-mail',
+            errorText: snapshot.hasError ? snapshot.error.toString() : null,
+          ),
+        );
+      },
     );
   }
-  // Widget emailField(Bloc bloc) {
-  //   return StreamBuilder(
-  //     //stream que, quando atualizado, produz um snapshot
-  //     //observe como usamos o stream definido no bloc
-  //     stream: bloc.email,
-  //     //função que, quando chamada, causa a atualização do Widget (TextField,neste caso) empacotado pelo StreamBuilder
-  //     builder: ((context, AsyncSnapshot<String> snapshot) {
-  //       return TextField(
-  //         onChanged: (newValue) {
-  //           bloc.changeEmail(newValue);
-  //         },
-  //         keyboardType: TextInputType.emailAddress,
-  //         decoration: InputDecoration(
-  //             //dica que aparece quando o usuário clica
-  //             hintText: 'seu@email.com',
-  //             //rótulo flutuante: usuário clica, ele "sobe"
-  //             labelText: 'Endereço de e-mail',
-  //             // o erro não necessariamente é String, por isso seu tipo é Object?, dai o uso de toString()
-  //             errorText: snapshot.hasError ? snapshot.error.toString() : null),
-  //       );
-  //     }),
-  //   );
-  // }
 
-  Widget passwordField() {
-    return TextField(
-      controller: _passwordController,
-      obscureText: true,
-      decoration: const InputDecoration(labelText: 'Senha', hintText: 'Senha'),
+  Widget passwordField(BuildContext context, RegistroBloc bloc) {
+    return StreamBuilder<String>(
+      stream: bloc.password,
+      builder: (context, snapshot) {
+        return TextField(
+          onChanged: bloc.changePassword,
+          obscureText: true,
+          decoration: InputDecoration(
+            hintText: "Senha",
+            labelText: "Senha",
+            errorText: snapshot.hasError ? snapshot.error.toString() : null,
+          ),
+        );
+      },
     );
   }
-  // Widget passwordField(Bloc bloc) {
-  //   return StreamBuilder(
-  //     stream: bloc.password,
-  //     builder: (context, AsyncSnapshot<String> snapshot) {
-  //       return TextField(
-  //         onChanged: bloc.changePassword,
-  //         obscureText: true,
-  //         decoration: InputDecoration(
-  //             hintText: "Senha",
-  //             labelText: "Senha",
-  //             errorText: snapshot.hasError ? snapshot.error.toString() : null),
-  //       );
-  //     },
-  //   );
-  // }
 
-  Widget submitButton(RegistroBloc bloc) {
+  Widget submitButton(BuildContext context, RegistroBloc bloc) {
     return ElevatedButton(
       onPressed: () {
         final name = _nameController.text;
