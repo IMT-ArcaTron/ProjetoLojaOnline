@@ -29,6 +29,8 @@ class LoginBloc with Validators {
   late String _email;
   late String _password;
   late bool _isRegistered = false;
+   late final String _userMessage = 'placeholder';
+  late final String _userMessageRegister = 'placeholder';
 
   final _mssUser = MssUser();
 
@@ -55,9 +57,6 @@ class LoginBloc with Validators {
         _isLoggedController.value = false;
         if (res == 401) {
           _userMessageController.sink.add("Email ou senha incorretos!");
-          CherryToast.success(
-      title: Text("Email ou senha incorretos!").,
-      );
         } else {
           _userMessageController.sink.add("Verifique o Microserviço!");
         }

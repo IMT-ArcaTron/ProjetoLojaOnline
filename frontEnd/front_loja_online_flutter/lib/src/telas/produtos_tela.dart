@@ -31,7 +31,13 @@ class ProdutosTela extends StatelessWidget {
               height: 80,
             ),
             FloatingActionButton(
-              onPressed: () => {loginBloc.logout()},
+              onPressed: () async => {
+                await loginBloc.logout(),
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const LoginTela()),
+                // )
+              },
               child: const Icon(Icons.exit_to_app),
             ),
             const SizedBox(

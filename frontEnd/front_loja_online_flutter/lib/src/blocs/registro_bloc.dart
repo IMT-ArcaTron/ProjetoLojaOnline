@@ -42,8 +42,7 @@ class RegistroBloc with Validators {
       };
 
   
-  Future<void> register(String regName, String regPhone, String regAddress,
-      String regEmail, String regPassword) async {
+  Future<void> register(String regName, String regPhone, String regAddress) async {
     try {
       int? res = 0;
       res = await _mssUser.register(

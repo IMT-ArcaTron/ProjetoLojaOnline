@@ -128,7 +128,7 @@ class RegistroTela extends StatelessWidget {
         final email = _emailController.text;
         final password = _passwordController.text;
 
-        bloc.register(name, phone, address, email, password);
+        bloc.register(name, phone, address);
 
         print('Nome: $name');
         print('Telefone: $phone');

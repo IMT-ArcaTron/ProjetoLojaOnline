@@ -171,4 +171,8 @@ kubectl apply -f mss-user-service.yaml
 # 🚀 Quarto Release
 ### - Implementação do novo Front-End em `flutter` com integração com o segundo microsserviço `mss-product`
 > No momento ele está usando o serviço local, mas será implementado utilizando o cluster kubernetes
+>> Ao rodar localmente é necessário subir os 3 microserviços:
+>> - mss-user
+>> - mss-product
+>> - barramento-eventos
 ### Para mais informações acesse a pasta `frontEnd/front_loja_online_flutter`

@@ -57,6 +57,19 @@ class LoginTela extends StatelessWidget {
               },
               child: Text("Ainda não possui login? Registre-se"),
             ),
+            StreamBuilder<String>(
+              stream: bloc.userMessage,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  String texto = snapshot.hasData
+                      ? snapshot.data ?? ""
+                      : "Mensagem padrão em caso de falta de dados";
+                  return Text(texto);
+                } else {
+                  return Text('');
+                }
+              },
+            ),
           ],
         ),
       ),
