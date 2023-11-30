@@ -85,7 +85,7 @@ class RegistroTela extends StatelessWidget {
     );
   }
 
- Widget emailField(BuildContext context, RegistroBloc bloc) {
+  Widget emailField(BuildContext context, RegistroBloc bloc) {
     return StreamBuilder<String>(
       stream: bloc.email,
       builder: (context, snapshot) {

@@ -8,13 +8,13 @@ import 'package:front_loja_online_flutter/src/telas/carrinho_tela.dart';
 import 'package:front_loja_online_flutter/src/telas/login_tela.dart';
 
 class ProdutosTela extends StatelessWidget {
-  const ProdutosTela({super.key});
+  final LoginBloc loginBloc;
+  const ProdutosTela({super.key, required this.loginBloc});
 
   @override
   Widget build(BuildContext context) {
     final produtosBloc = ProdutosBloc();
     final carrinhoBloc = CarrinhoBloc();
-    final loginBloc = LoginBloc();
     produtosBloc.getAllProducts(); // Chama o método para obter os produtos
 
     return Scaffold(
@@ -31,12 +31,12 @@ class ProdutosTela extends StatelessWidget {
               height: 80,
             ),
             FloatingActionButton(
-              onPressed: () async => {
-                await loginBloc.logout(),
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const LoginTela()),
-                // )
+              onPressed: () async {
+                await loginBloc.logout();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginTela()),
+                );
               },
               child: const Icon(Icons.exit_to_app),
             ),

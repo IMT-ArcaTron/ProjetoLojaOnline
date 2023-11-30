@@ -176,3 +176,4 @@ kubectl apply -f mss-user-service.yaml
 >> - mss-product
 >> - barramento-eventos
 ### Para mais informações acesse a pasta `frontEnd/front_loja_online_flutter`
+### Para ter uma prévia de como a aplicação funciona, acesse o vídeo na pasta `videos/`
