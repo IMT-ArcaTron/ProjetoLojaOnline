@@ -18,7 +18,8 @@ class LoginTela extends StatelessWidget {
           WidgetsBinding.instance?.addPostFrameCallback((_) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ProdutosTela()),
+              MaterialPageRoute(
+                  builder: (context) => ProdutosTela(loginBloc: bloc)),
             );
           });
         }
@@ -31,7 +32,8 @@ class LoginTela extends StatelessWidget {
   Widget buildLoginForm(BuildContext context, LoginBloc bloc, bool isLogged) {
     // bloc.reset(); // Reinicia o estado do Stream
 
-    return Center(
+    return Material(
+        child: Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 300),
         child: Column(
@@ -73,7 +75,7 @@ class LoginTela extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 
   Widget emailField(BuildContext context, LoginBloc bloc) {
